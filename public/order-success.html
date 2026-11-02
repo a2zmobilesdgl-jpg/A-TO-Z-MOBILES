@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Placed - A TO Z MOBILES (Call Confirmation)</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .success-hero {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 2.5rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .call-confirm-badge {
+      background: #EFF6FF;
+      border: 2px solid #3B82F6;
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      max-width: 640px;
+      margin: 1.5rem auto;
+      text-align: left;
+    }
+
+    .tracking-timeline-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 2rem 0;
+    }
+    .stepper::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 30px;
+      right: 30px;
+      height: 4px;
+      background: #E2E8F0;
+      z-index: 1;
+    }
+    .stepper-progress {
+      position: absolute;
+      top: 18px;
+      left: 30px;
+      height: 4px;
+      background: #10B981;
+      z-index: 2;
+      transition: width 0.5s ease;
+    }
+    .step-node {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 120px;
+    }
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background: #FFFFFF;
+      border: 3px solid #CBD5E1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9375rem;
+      color: #64748B;
+      margin-bottom: 0.6rem;
+    }
+    .step-node.completed .step-circle {
+      background: #10B981;
+      border-color: #10B981;
+      color: #FFFFFF;
+    }
+    .step-node.active .step-circle {
+      background: #2563EB;
+      border-color: #2563EB;
+      color: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+    }
+    .step-label {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .step-desc {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .invoice-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9375rem;
+    }
+    .invoice-table th {
+      background: #F1F5F9;
+      color: var(--text-main);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .invoice-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      .invoice-card, .invoice-card * { visibility: visible; }
+      .invoice-card { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; padding: 0; }
+      .site-header, .site-footer, .floating-whatsapp, .top-bar, .success-hero, .tracking-timeline-box, .btn-no-print { display: none !important; }
+    }
+
+    @media (max-width: 768px) {
+      .stepper { flex-direction: column; gap: 1.5rem; }
+      .stepper::before, .stepper-progress { display: none; }
+      .step-node { flex-direction: row; width: 100%; text-align: left; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-row" style="justify-content: space-between;">
+        <a href="/" class="brand-logo"><img src="/images/logo.svg" alt="A TO Z MOBILES Logo"></a>
+        <a href="/shop.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-mobile-screen"></i> Browse Store</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Success Hero -->
+    <div class="success-hero">
+      <div style="width:76px; height:76px; background:#ECFDF5; color:#10B981; border-radius:9999px; display:inline-flex; align-items:center; justify-content:center; font-size:2.5rem; margin-bottom:1rem;">
+        <i class="fa-solid fa-phone-volume"></i>
+      </div>
+      <h1 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem;">Order Received Successfully!</h1>
+      <p style="color: var(--text-muted); font-size: 1.0625rem; max-width: 620px; margin: 0 auto;">
+        Your order has been logged into our Chennai store system. No online payment was charged. You will pay upon delivery.
+      </p>
+
+      <div style="display:inline-flex; align-items:center; gap:0.75rem; background: var(--bg-subtle); border: 1.5px dashed var(--primary); padding: 0.75rem 1.75rem; border-radius: var(--radius-full); font-size: 1rem; font-weight: 700; margin: 1.25rem 0;">
+        <span>Order Reference Code:</span>
+        <span id="order-id-label" style="color: var(--primary); font-size: 1.25rem; font-family: monospace;">Loading...</span>
+        <button onclick="copyOrderId()" title="Copy Code" style="color: var(--text-muted);"><i class="fa-regular fa-copy"></i></button>
+      </div>
+
+      <!-- Call Notice Card -->
+      <div class="call-confirm-badge">
+        <div style="display:flex; align-items:flex-start; gap:1rem;">
+          <i class="fa-solid fa-headset" style="font-size:2rem; color:#2563EB; margin-top:4px;"></i>
+          <div>
+            <h3 style="font-size:1.15rem; font-weight:800; color:#1E3A8A; margin-bottom:0.35rem;">
+              What Happens Next:
+            </h3>
+            <p style="color:#1E293B; font-size:0.9375rem; line-height:1.6; margin-bottom:1rem;">
+              Our store manager will call you at <strong id="cust-phone-label" style="color:#2563EB;">your phone</strong> within <strong>15–30 minutes</strong> to:
+            </p>
+            <ul style="font-size:0.875rem; color:#334155; margin-left:1.25rem; display:flex; flex-direction:column; gap:0.35rem;">
+              <li>Confirm the phone model, color, and condition grade.</li>
+              <li>Verify your complete shipping address for Blue Dart dispatch.</li>
+              <li>Answer any technical questions about the battery health & warranty.</li>
+            </ul>
+
+            <div style="margin-top:1.25rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <a href="#" id="btn-wa-confirm-fast" class="btn btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> Confirm Instantly on WhatsApp
+              </a>
+              <a href="tel:+919876543210" class="btn btn-outline">
+                <i class="fa-solid fa-phone"></i> Call Store (+91 98765 43210)
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Stepper -->
+    <div class="tracking-timeline-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.5rem;">
+        <h3 style="font-size:1.15rem; font-weight:800;"><i class="fa-solid fa-truck-ramp-box" style="color:var(--primary);"></i> Order & Delivery Progress</h3>
+        <span style="font-size:0.8125rem; color:#10B981; font-weight:700;"><i class="fa-solid fa-shield"></i> 6-Month Store Warranty Included</span>
+      </div>
+
+      <div class="stepper">
+        <div class="stepper-progress" id="stepper-progress" style="width: 25%;"></div>
+
+        <div class="step-node active" id="step-0">
+          <div class="step-circle"><i class="fa-solid fa-phone"></i></div>
+          <div class="step-label">Order Received</div>
+          <div class="step-desc">Awaiting Call</div>
+        </div>
+
+        <div class="step-node" id="step-1">
+          <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+          <div class="step-label">Phone Confirmed</div>
+          <div class="step-desc">Address Verified</div>
+        </div>
+
+        <div class="step-node" id="step-2">
+          <div class="step-circle"><i class="fa-solid fa-microchip"></i></div>
+          <div class="step-label">32-Point Check</div>
+          <div class="step-desc">Lab Sealed</div>
+        </div>
+
+        <div class="step-node" id="step-3">
+          <div class="step-circle"><i class="fa-solid fa-truck-fast"></i></div>
+          <div class="step-label">Dispatched</div>
+          <div class="step-desc">Blue Dart Express</div>
+        </div>
+
+        <div class="step-node" id="step-4">
+          <div class="step-circle"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          <div class="step-label">Delivered & Paid</div>
+          <div class="step-desc">Pay at Doorstep</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Printable Invoice Receipt -->
+    <div class="invoice-card" id="invoice-section">
+      <div style="display:flex; justify-content:space-between; border-bottom:2px solid #0F172A; padding-bottom:1.5rem; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <img src="/images/logo.svg" alt="A TO Z MOBILES" style="height:44px; margin-bottom:0.5rem;">
+          <div style="font-size:0.8125rem; color:var(--text-muted);">
+            A TO Z MOBILES Refurbished Superstore &bull; Chennai - 600040<br>
+            GSTIN: <strong>33AAICA2026M1Z8</strong> &bull; Support Phone: +91 98765 43210
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <h2 style="font-size:1.35rem; font-weight:900; color:var(--secondary);">ORDER ESTIMATE & INVOICE</h2>
+          <div style="font-size:0.875rem; color:var(--text-muted); margin-top:0.25rem;">
+            Order ID: <strong id="inv-num">AZM-2026-0000</strong><br>
+            Payment Terms: <strong>CASH ON DELIVERY (UPON PHONE CONFIRMATION)</strong>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:1.5rem;">
+        <div>
+          <h4 style="font-size:0.8125rem; font-weight:800; text-transform:uppercase; color:var(--text-muted);">Customer & Delivery Info:</h4>
+          <div style="font-size:0.9375rem; line-height:1.6; margin-top:0.25rem;">
+            <strong id="inv-cust-name">Customer Name</strong><br>
+            Phone: <strong id="inv-cust-phone" style="color:var(--primary);">+91 0000000000</strong><br>
+            Address: <span id="inv-cust-address">Shipping Address</span>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-size:0.8125rem; font-weight:800; text-transform:uppercase; color:var(--text-muted);">Warranty Certificate:</h4>
+          <div style="background:#F8FAFC; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:0.75rem; font-size:0.8125rem; line-height:1.6;">
+            <div><i class="fa-solid fa-check" style="color:#10B981;"></i> 6 Months Store Warranty Included</div>
+            <div><i class="fa-solid fa-check" style="color:#10B981;"></i> 7 Days Hassle-Free Replacement Guarantee</div>
+          </div>
+        </div>
+      </div>
+
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th>Ordered Phone</th>
+            <th>Grade</th>
+            <th>Battery Health</th>
+            <th>Qty</th>
+            <th style="text-align:right;">Price</th>
+          </tr>
+        </thead>
+        <tbody id="inv-items-body"></tbody>
+      </table>
+
+      <div style="max-width:320px; margin-left:auto; font-size:1rem; border-top:2px solid #0F172A; padding-top:0.75rem; display:flex; justify-content:space-between;">
+        <strong>Total Amount Payable on Delivery:</strong>
+        <span style="font-size:1.5rem; font-weight:900; color:var(--primary);" id="inv-grand-total">₹0</span>
+      </div>
+    </div>
+
+    <!-- Actions Row -->
+    <div class="btn-no-print" style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 4rem;">
+      <button onclick="window.print()" class="btn btn-outline btn-lg">
+        <i class="fa-solid fa-print"></i> Print Invoice
+      </button>
+      <a href="/shop.html" class="btn btn-primary btn-lg">
+        <i class="fa-solid fa-mobile-screen"></i> Continue Shopping
+      </a>
+    </div>
+  </main>
+
+  <footer class="site-footer btn-no-print">
+    <div class="container footer-bottom">
+      <div>&copy; 2026 A TO Z MOBILES. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+
+  <script>
+    let currentOrderId = '';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      currentOrderId = params.get('orderId');
+      const phoneParam = params.get('phone') || '';
+      const nameParam = params.get('name') || '';
+
+      if (!currentOrderId) {
+        window.location.href = '/';
+        return;
+      }
+
+      document.getElementById('order-id-label').textContent = currentOrderId;
+      if (phoneParam) document.getElementById('cust-phone-label').textContent = phoneParam;
+
+      // WhatsApp Fast Confirm Button
+      const waBtn = document.getElementById('btn-wa-confirm-fast');
+      const msg = `Hi A TO Z MOBILES! I just placed order #${currentOrderId}${nameParam ? ' (' + nameParam + ')' : ''}. Please confirm my order details!`;
+      waBtn.href = `https://wa.me/919876543210?text=${encodeURIComponent(msg)}`;
+
+      try {
+        const res = await window.api.getOrder(currentOrderId);
+        if (res.success && res.order) {
+          const o = res.order;
+          document.getElementById('inv-num').textContent = o.order_id;
+          document.getElementById('inv-cust-name').textContent = o.customer_name;
+          document.getElementById('inv-cust-phone').textContent = o.customer_phone;
+          document.getElementById('cust-phone-label').textContent = o.customer_phone;
+          document.getElementById('inv-cust-address').textContent = `${o.shipping_address} ${o.city ? ', ' + o.city : ''} ${o.pincode ? ' - ' + o.pincode : ''}`;
+          document.getElementById('inv-grand-total').textContent = AtoZ.formatCurrency(o.total_amount);
+
+          const tbody = document.getElementById('inv-items-body');
+          tbody.innerHTML = (o.items || []).map(i => `
+            <tr>
+              <td><strong>${i.name}</strong> (${i.ram || ''} / ${i.storage || ''})</td>
+              <td>${i.grade || 'Superb'}</td>
+              <td><strong style="color:#059669;">${i.battery_health || 92}%</strong></td>
+              <td>${i.quantity}</td>
+              <td style="text-align:right; font-weight:700;">${AtoZ.formatCurrency(i.price * i.quantity)}</td>
+            </tr>
+          `).join('');
+
+          // Stepper update
+          updateTimeline(o.order_status);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    });
+
+    function updateTimeline(status) {
+      const st = (status || '').toLowerCase();
+      let stepIndex = 0;
+      if (st.includes('confirm')) stepIndex = 1;
+      if (st.includes('inspect') || st.includes('pack')) stepIndex = 2;
+      if (st.includes('dispatch') || st.includes('ship')) stepIndex = 3;
+      if (st.includes('deliver')) stepIndex = 4;
+
+      document.getElementById('stepper-progress').style.width = `${(stepIndex + 1) * 20}%`;
+      for (let i = 0; i <= 4; i++) {
+        const node = document.getElementById(`step-${i}`);
+        if (!node) continue;
+        if (i < stepIndex) {
+          node.className = 'step-node completed';
+          node.querySelector('.step-circle').innerHTML = '<i class="fa-solid fa-check"></i>';
+        } else if (i === stepIndex) {
+          node.className = 'step-node active';
+        } else {
+          node.className = 'step-node';
+        }
+      }
+    }
+
+    function copyOrderId() {
+      navigator.clipboard.writeText(currentOrderId);
+      AtoZ.showToast('Order code copied!', 'success');
+    }
+  </script>
+</body>
+</html>

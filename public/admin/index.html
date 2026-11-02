@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - A TO Z MOBILES (Call & Confirm Orders)</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    body.admin-body {
+      background-color: #0F172A;
+      color: #F8FAFC;
+    }
+    .admin-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+    .admin-sidebar {
+      width: 260px;
+      background: #0B0F19;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .admin-brand {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .admin-nav {
+      padding: 1.25rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      color: #94A3B8;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+    }
+    .admin-nav-item:hover, .admin-nav-item.active {
+      background: rgba(37, 99, 235, 0.15);
+      color: #60A5FA;
+    }
+
+    .admin-main {
+      flex: 1;
+      padding: 2rem 2.5rem;
+      overflow-y: auto;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 1.25rem;
+    }
+
+    /* Metric Cards */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .metric-card {
+      background: #1E293B;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .metric-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: rgba(37, 99, 235, 0.2);
+      color: #38BDF8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .metric-val {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+    .metric-title {
+      font-size: 0.8125rem;
+      color: #94A3B8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Data Tables */
+    .admin-card {
+      background: #1E293B;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+    }
+    .admin-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      background: #0F172A;
+      color: #94A3B8;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .admin-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #E2E8F0;
+      vertical-align: middle;
+    }
+    .admin-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Fast Action Buttons */
+    .btn-call {
+      background: #10B981;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      text-decoration: none;
+    }
+    .btn-call:hover { background: #059669; color: #FFFFFF; }
+
+    .btn-wa {
+      background: #25D366;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      text-decoration: none;
+    }
+    .btn-wa:hover { background: #1EBE5D; color: #FFFFFF; }
+
+    .btn-action-confirm {
+      background: #2563EB;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-action-confirm:hover { background: #1D4ED8; }
+
+    .btn-action-dispatch {
+      background: #7C3AED;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-action-dispatch:hover { background: #6D28D9; }
+
+    .btn-action-paid {
+      background: #059669;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-action-paid:hover { background: #047857; }
+
+    .btn-action-cancel {
+      background: rgba(239, 68, 68, 0.2);
+      color: #F87171;
+      border: 1px solid #EF4444;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .btn-action-cancel:hover { background: #EF4444; color: #FFFFFF; }
+
+    .status-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+    }
+    .status-pill.awaiting { background: #FEF3C7; color: #B45309; }
+    .status-pill.confirmed { background: #DBEAFE; color: #1E40AF; }
+    .status-pill.dispatched { background: #EDE9FE; color: #6D28D9; }
+    .status-pill.delivered { background: #D1FAE5; color: #065F46; }
+    .status-pill.cancelled { background: #FEE2E2; color: #991B1B; }
+
+    /* Modals */
+    .admin-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .admin-modal {
+      background: #1E293B;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-xl);
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      box-shadow: var(--shadow-xl);
+      color: #FFFFFF;
+    }
+    .dark-input {
+      background: #0F172A !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+      color: #FFFFFF !important;
+    }
+
+    .order-filter-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .order-filter-btn {
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94A3B8;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .order-filter-btn.active, .order-filter-btn:hover {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+      .admin-wrapper { flex-direction: column; }
+      .admin-sidebar { width: 100%; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- Admin Login Overlay -->
+  <div id="admin-login-overlay" class="admin-modal-backdrop" style="display: flex;">
+    <div style="background: #1E293B; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--radius-xl); padding: 2.5rem; max-width: 440px; width: 100%; box-shadow: var(--shadow-xl);">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <img src="/images/logo-dark.svg" alt="A TO Z MOBILES" style="height: 48px; margin: 0 auto 0.75rem;">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: #FFFFFF;">Admin Portal Login</h2>
+        <p style="font-size: 0.8125rem; color: #94A3B8;">Phone Order Confirmation & Management</p>
+      </div>
+
+      <form id="admin-login-form">
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem; color:#E2E8F0;">Admin Email</label>
+          <input type="email" id="ad-email" required class="form-input dark-input" value="admin@atozmobiles.in" placeholder="admin@atozmobiles.in">
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem; color:#E2E8F0;">Password</label>
+          <input type="password" id="ad-pass" required class="form-input dark-input" value="admin123" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem; font-size: 1rem; padding: 0.85rem;">
+          <i class="fa-solid fa-lock"></i> Authorize & Enter Dashboard
+        </button>
+        <div style="text-align: center; font-size: 0.8125rem; color: #94A3B8;">
+          <i class="fa-solid fa-shield-halved" style="color: #10B981;"></i> Pre-filled with Default Store Admin
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-wrapper" id="admin-app" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <a href="/" target="_blank"><img src="/images/logo-dark.svg" alt="A TO Z MOBILES" style="height: 40px;"></a>
+      </div>
+
+      <nav class="admin-nav">
+        <button class="admin-nav-item active" onclick="switchAdminTab('orders')" id="btn-adm-orders">
+          <i class="fa-solid fa-phone-volume" style="color: #10B981;"></i> Call & Confirm Orders
+        </button>
+        <button class="admin-nav-item" onclick="switchAdminTab('overview')" id="btn-adm-overview">
+          <i class="fa-solid fa-chart-pie"></i> Sales & Analytics
+        </button>
+        <button class="admin-nav-item" onclick="switchAdminTab('products')" id="btn-adm-products">
+          <i class="fa-solid fa-mobile-screen"></i> Manage Products
+        </button>
+        <button class="admin-nav-item" onclick="switchAdminTab('customers')" id="btn-adm-customers">
+          <i class="fa-solid fa-users"></i> Customers
+        </button>
+        <button class="admin-nav-item" onclick="switchAdminTab('coupons')" id="btn-adm-coupons">
+          <i class="fa-solid fa-tag"></i> Coupons
+        </button>
+        <button class="admin-nav-item" onclick="switchAdminTab('settings')" id="btn-adm-settings">
+          <i class="fa-solid fa-gear"></i> Store Settings
+        </button>
+
+        <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+          <a href="/" target="_blank" class="admin-nav-item" style="color: #38BDF8;">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Live Storefront
+          </a>
+          <button onclick="adminLogout()" class="admin-nav-item" style="color: #F87171;">
+            <i class="fa-solid fa-power-off"></i> Logout
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-header">
+        <div>
+          <h1 style="font-size: 1.75rem; font-weight: 800; color: #FFFFFF;" id="admin-page-title">📞 Call & Confirm Orders</h1>
+          <p style="font-size: 0.875rem; color: #94A3B8;">Call customers in 1 click, verify delivery details on WhatsApp, and confirm shipments easily.</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <button onclick="loadAdminOrders()" class="btn btn-outline btn-sm" style="color:#38BDF8; border-color:rgba(255,255,255,0.2);">
+            <i class="fa-solid fa-arrows-rotate"></i> Refresh Orders
+          </button>
+          <button onclick="openProductModal()" class="btn btn-primary btn-sm">
+            <i class="fa-solid fa-plus"></i> Add New Phone
+          </button>
+        </div>
+      </div>
+
+      <!-- Instant Editable WhatsApp Number Bar -->
+      <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1.5px solid #10B981; border-radius: var(--radius-lg); padding: 1rem 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="display:flex; align-items:center; gap:0.85rem;">
+          <div style="width:42px; height:42px; background:#25D366; color:#FFFFFF; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div>
+            <div style="font-weight:800; font-size:1rem; color:#FFFFFF;">Store WhatsApp Number: <span id="current-wa-badge" style="color:#34D399; font-family:monospace;">+91 98765 43210</span></div>
+            <div style="font-size:0.75rem; color:#94A3B8;">All customer inquiries, product requests, and order confirmation buttons link to this number.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <input type="text" id="quick-wa-input" class="form-input dark-input" placeholder="+919876543210" style="width:190px; font-weight:700; color:#34D399; padding:0.45rem 0.75rem;">
+          <button type="button" onclick="saveAdminWhatsApp()" class="btn btn-primary btn-sm" style="background:#25D366; color:#064E3B; font-weight:800; border:none;">
+            <i class="fa-solid fa-floppy-disk"></i> Save WhatsApp
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab: Orders (Default primary view for easy admin phone handling) -->
+      <section id="tab-orders">
+        <!-- Quick Alert Cards -->
+        <div class="metric-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 1.5rem;">
+          <div class="metric-card" style="border-color: #F59E0B; cursor:pointer;" onclick="filterOrdersBy('awaiting')">
+            <div class="metric-icon-box" style="background:rgba(245, 158, 11, 0.2); color:#F59E0B;"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <div class="metric-val" id="stat-pending-calls" style="color:#F59E0B;">0</div>
+              <div class="metric-title">Needs Phone Call</div>
+            </div>
+          </div>
+          <div class="metric-card" style="cursor:pointer;" onclick="filterOrdersBy('confirmed')">
+            <div class="metric-icon-box" style="background:rgba(59, 130, 246, 0.2); color:#60A5FA;"><i class="fa-solid fa-clipboard-check"></i></div>
+            <div>
+              <div class="metric-val" id="stat-confirmed-orders">0</div>
+              <div class="metric-title">Confirmed & Ready</div>
+            </div>
+          </div>
+          <div class="metric-card" style="cursor:pointer;" onclick="filterOrdersBy('dispatched')">
+            <div class="metric-icon-box" style="background:rgba(124, 58, 237, 0.2); color:#A78BFA;"><i class="fa-solid fa-truck-fast"></i></div>
+            <div>
+              <div class="metric-val" id="stat-dispatched-orders">0</div>
+              <div class="metric-title">In-Transit / Shipped</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box" style="background:rgba(16, 185, 129, 0.2); color:#34D399;"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <div>
+              <div class="metric-val" id="stat-total-sales-orders">₹0</div>
+              <div class="metric-title">Collected Revenue</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <!-- Filter Pills -->
+          <div class="order-filter-pills">
+            <button class="order-filter-btn active" onclick="filterOrdersBy('all', this)">All Orders</button>
+            <button class="order-filter-btn" onclick="filterOrdersBy('awaiting', this)">🔴 Needs Call Confirmation (<span id="pill-needs-call">0</span>)</button>
+            <button class="order-filter-btn" onclick="filterOrdersBy('confirmed', this)">🔵 Confirmed (Ready to Pack)</button>
+            <button class="order-filter-btn" onclick="filterOrdersBy('dispatched', this)">🟣 Dispatched with Courier</button>
+            <button class="order-filter-btn" onclick="filterOrdersBy('delivered', this)">🟢 Delivered & Paid</button>
+          </div>
+
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order ID & Date</th>
+                <th>Customer Name</th>
+                <th>Phone & One-Click Contact</th>
+                <th>Ordered Phone</th>
+                <th>Amount</th>
+                <th>Current Status</th>
+                <th style="min-width: 220px;">1-Click Easy Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tab: Overview & Stats -->
+      <section id="tab-overview" style="display: none;">
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div class="metric-icon-box"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <div>
+              <div class="metric-val" id="stat-sales">₹0</div>
+              <div class="metric-title">Total Sales Revenue</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box"><i class="fa-solid fa-box-open"></i></div>
+            <div>
+              <div class="metric-val" id="stat-orders">0</div>
+              <div class="metric-title">Total Orders</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box"><i class="fa-solid fa-mobile-screen"></i></div>
+            <div>
+              <div class="metric-val" id="stat-products">0</div>
+              <div class="metric-title">In-Stock Mobiles</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-box"><i class="fa-solid fa-users"></i></div>
+            <div>
+              <div class="metric-val" id="stat-customers">0</div>
+              <div class="metric-title">Registered Customers</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h2 style="font-size: 1.15rem; font-weight: 800; color: #F59E0B;"><i class="fa-solid fa-triangle-exclamation"></i> Low Inventory Alerts (&le; 2 Units)</h2>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Phone Model</th>
+                <th>Brand</th>
+                <th>Remaining Stock</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="low-stock-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tab: Products -->
+      <section id="tab-products" style="display: none;">
+        <div class="admin-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h2 style="font-size: 1.25rem; font-weight: 800;">Refurbished Inventory Management</h2>
+            <button onclick="openProductModal()" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Add New Phone</button>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Model Name</th>
+                <th>Brand</th>
+                <th>RAM / Storage</th>
+                <th>Battery Health</th>
+                <th>Selling Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-products-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tab: Customers -->
+      <section id="tab-customers" style="display: none;">
+        <div class="admin-card">
+          <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom:1rem;">Customer Database</h2>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Email Address</th>
+                <th>Phone</th>
+                <th>Location</th>
+                <th>Orders Placed</th>
+                <th>Total Spent</th>
+              </tr>
+            </thead>
+            <tbody id="admin-customers-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tab: Coupons -->
+      <section id="tab-coupons" style="display: none;">
+        <div class="admin-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h2 style="font-size: 1.25rem; font-weight: 800;">Active Coupons & Discounts</h2>
+            <button onclick="openCouponModal()" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Create Coupon</button>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Coupon Code</th>
+                <th>Discount Type</th>
+                <th>Discount Value</th>
+                <th>Min Cart Value</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-coupons-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tab: Settings -->
+      <section id="tab-settings" style="display: none;">
+        <div class="admin-card">
+          <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom:1rem;">Store & Customer Call Settings</h2>
+          <form id="admin-settings-form">
+            <div class="form-grid-2">
+              <div>
+                <label class="form-label" style="color:#E2E8F0;">Shop Display Name</label>
+                <input type="text" id="set-shop-name" class="form-input dark-input">
+              </div>
+              <div>
+                <label class="form-label" style="color:#E2E8F0;">Customer Confirmation WhatsApp Number</label>
+                <input type="text" id="set-whatsapp" class="form-input dark-input" placeholder="+919876543210">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div>
+                <label class="form-label" style="color:#E2E8F0;">Store Calling Phone Number</label>
+                <input type="text" id="set-phone" class="form-input dark-input">
+              </div>
+              <div>
+                <label class="form-label" style="color:#E2E8F0;">Store UPI ID</label>
+                <input type="text" id="set-upi" class="form-input dark-input">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="color:#E2E8F0;">Store Address (Printed on Invoices)</label>
+              <textarea id="set-address" rows="2" class="form-input dark-input"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="fa-solid fa-floppy-disk"></i> Save Settings
+            </button>
+          </form>
+        </div>
+
+        <!-- Admin Security / Change Password Card -->
+        <div class="admin-card" style="margin-top: 2rem; border: 1.5px solid rgba(37, 99, 235, 0.4);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <h2 style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF;">
+                <i class="fa-solid fa-shield-halved" style="color: #10B981;"></i> Admin Security & Change Password
+              </h2>
+              <p style="font-size: 0.8125rem; color: #94A3B8;">Protect your store by setting a strong, secure password for the admin portal.</p>
+            </div>
+            <button type="button" onclick="generateAndFillPassword()" class="btn btn-outline btn-sm" style="color: #38BDF8; border-color: rgba(56, 189, 248, 0.5); background: rgba(56, 189, 248, 0.1);">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> 🎲 Generate Ultra-Strong Password
+            </button>
+          </div>
+
+          <form id="admin-password-form">
+            <div class="form-grid-2">
+              <div>
+                <label class="form-label" style="color:#E2E8F0;">Current Password *</label>
+                <input type="password" id="pwd-current" required class="form-input dark-input" placeholder="Current password (default: admin123)">
+              </div>
+              <div>
+                <label class="form-label" style="color:#E2E8F0;">New Strong Password *</label>
+                <input type="text" id="pwd-new" required minlength="8" class="form-input dark-input" placeholder="At least 8 chars with letters, numbers & symbols">
+                <!-- Strength Meter -->
+                <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                  <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                    <div id="pwd-strength-bar" style="height: 100%; width: 0%; background: #EF4444; transition: all 0.3s;"></div>
+                  </div>
+                  <span id="pwd-strength-text" style="font-size: 0.75rem; color: #94A3B8; font-weight: 700;">None</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 1rem;">
+              <label class="form-label" style="color:#E2E8F0;">Confirm New Password *</label>
+              <input type="text" id="pwd-confirm" required minlength="8" class="form-input dark-input" placeholder="Re-type your new password">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="background: #10B981; border-color: #10B981;">
+              <i class="fa-solid fa-lock"></i> Update & Save New Password
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Add/Edit Product Modal -->
+  <div id="product-modal" class="admin-modal-backdrop" style="display: none;">
+    <div class="admin-modal">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem;">
+        <h2 style="font-size:1.35rem; font-weight:800;" id="prod-modal-title">Add Refurbished Phone</h2>
+        <button type="button" onclick="closeProductModal()" style="font-size:1.5rem; color:#94A3B8;">&times;</button>
+      </div>
+
+      <form id="product-form">
+        <input type="hidden" id="edit-prod-id">
+
+        <div class="form-grid-2">
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Product Title *</label>
+            <input type="text" id="p-name" required class="form-input dark-input" placeholder="e.g. Apple iPhone 14 Pro (Deep Purple, 128 GB)">
+          </div>
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Brand *</label>
+            <select id="p-brand" required class="form-input dark-input">
+              <option value="Apple">Apple</option>
+              <option value="Samsung">Samsung</option>
+              <option value="OnePlus">OnePlus</option>
+              <option value="Redmi">Redmi</option>
+              <option value="Vivo">Vivo</option>
+              <option value="Oppo">Oppo</option>
+              <option value="Realme">Realme</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Original MRP (₹) *</label>
+            <input type="number" id="p-orig-price" required class="form-input dark-input" placeholder="129900">
+          </div>
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Selling Refurbished Price (₹) *</label>
+            <input type="number" id="p-sell-price" required class="form-input dark-input" placeholder="68999">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">RAM *</label>
+            <input type="text" id="p-ram" required class="form-input dark-input" placeholder="e.g. 6 GB">
+          </div>
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Storage Capacity *</label>
+            <input type="text" id="p-storage" required class="form-input dark-input" placeholder="e.g. 128 GB">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Battery Health % (80-100) *</label>
+            <input type="number" id="p-battery" required min="80" max="100" class="form-input dark-input" placeholder="96">
+          </div>
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Grade *</label>
+            <select id="p-grade" class="form-input dark-input">
+              <option value="Superb (Like New)">Superb (Like New)</option>
+              <option value="Good Condition">Good Condition</option>
+              <option value="Fair Condition">Fair Condition</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Available Stock *</label>
+            <input type="number" id="p-stock" required min="0" class="form-input dark-input" placeholder="3">
+          </div>
+          <div>
+            <label class="form-label" style="color:#E2E8F0;">Color Finish</label>
+            <input type="text" id="p-color" class="form-input dark-input" placeholder="Deep Purple">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Display Condition</label>
+          <input type="text" id="p-display" class="form-input dark-input" placeholder="Flawless OLED">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Camera Condition</label>
+          <input type="text" id="p-camera" class="form-input dark-input" placeholder="100% Tested">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Body Condition</label>
+          <input type="text" id="p-body" class="form-input dark-input" placeholder="Mint surgical-grade frame">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Image URL *</label>
+          <input type="url" id="p-image-url" required class="form-input dark-input" placeholder="https://images.unsplash.com/...">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Description</label>
+          <textarea id="p-desc" rows="2" class="form-input dark-input"></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+          <button type="button" onclick="closeProductModal()" class="btn btn-outline" style="color:#E2E8F0; border-color:rgba(255,255,255,0.2);">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Phone</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Coupon Modal -->
+  <div id="coupon-modal" class="admin-modal-backdrop" style="display: none;">
+    <div class="admin-modal" style="max-width: 440px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h2 style="font-size:1.25rem; font-weight:800;">Create Discount Coupon</h2>
+        <button type="button" onclick="closeCouponModal()" style="font-size:1.5rem; color:#94A3B8;">&times;</button>
+      </div>
+
+      <form id="coupon-form">
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Coupon Code *</label>
+          <input type="text" id="cp-code" required class="form-input dark-input" placeholder="e.g. MEGA1000" style="text-transform: uppercase;">
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Discount Type</label>
+          <select id="cp-type" class="form-input dark-input">
+            <option value="flat">Flat Cash Discount (₹)</option>
+            <option value="percentage">Percentage (%) Discount</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Discount Value *</label>
+          <input type="number" id="cp-val" required class="form-input dark-input" placeholder="1000 or 10">
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="color:#E2E8F0;">Minimum Order Amount (₹)</label>
+          <input type="number" id="cp-min" class="form-input dark-input" placeholder="10000">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Save Coupon</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

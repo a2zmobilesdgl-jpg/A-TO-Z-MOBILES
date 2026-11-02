@@ -1,0 +1,20 @@
+{
+  "name": "a-to-z-mobiles",
+  "version": "1.0.0",
+  "description": "A TO Z MOBILES - Premium Certified Refurbished & Second-Hand Mobile Phone Store",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "seed": "node server/seed.js"
+  },
+  "keywords": [
+    "refurbished-mobiles",
+    "second-hand-phones",
+    "ecommerce",
+    "razorpay",
+    "a-to-z-mobiles"
+  ],
+  "author": "A TO Z MOBILES",
+  "license": "ISC"
+}

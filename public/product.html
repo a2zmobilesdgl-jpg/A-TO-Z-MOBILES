@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refurbished Smartphone - A TO Z MOBILES</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .product-page-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 3.5rem;
+      padding: 3rem 0;
+    }
+
+    /* Gallery */
+    .gallery-container {
+      position: sticky;
+      top: 100px;
+    }
+    .main-img-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem 1.5rem;
+      height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .main-product-img {
+      max-height: 380px;
+      max-width: 100%;
+      object-fit: contain;
+      transition: transform var(--transition-fast);
+    }
+    .main-img-box:hover .main-product-img {
+      transform: scale(1.04);
+    }
+    .thumbnail-row {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .thumb-btn {
+      width: 76px;
+      height: 76px;
+      background: #FFFFFF;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+    }
+    .thumb-btn.active, .thumb-btn:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+    .thumb-img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    /* Condition Scorecard Box */
+    .scorecard-card {
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .scorecard-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .score-metric {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.875rem;
+    }
+    .score-metric:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .score-label {
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .score-value {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Battery Progress Bar */
+    .battery-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .battery-bar-track {
+      flex: 1;
+      height: 8px;
+      background: #E2E8F0;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .battery-bar-fill {
+      height: 100%;
+      background: #10B981;
+      border-radius: var(--radius-full);
+    }
+
+    /* Accessories Checklist */
+    .accessories-box {
+      background: var(--bg-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .accessories-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-top: 0.75rem;
+    }
+    .acc-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .acc-item i {
+      color: #10B981;
+    }
+
+    /* Variant Selector */
+    .variant-group {
+      margin: 1.25rem 0;
+    }
+    .variant-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+    .variant-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .variant-pill {
+      border: 1.5px solid var(--border-color);
+      background: #FFFFFF;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .variant-pill.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* Action buttons grid */
+    .product-actions-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 54px;
+      gap: 0.75rem;
+      margin: 2rem 0;
+    }
+    .btn-buy-lg {
+      background: var(--secondary);
+      color: #FFFFFF;
+      font-size: 1.0625rem;
+      font-weight: 700;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all var(--transition-fast);
+    }
+    .btn-buy-lg:hover {
+      background: #000000;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+    .btn-cart-lg {
+      background: var(--primary);
+      color: #FFFFFF;
+      font-size: 1.0625rem;
+      font-weight: 700;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all var(--transition-fast);
+    }
+    .btn-cart-lg:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Technical Specifications Table */
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.875rem;
+    }
+    .specs-table tr {
+      border-bottom: 1px solid var(--border-color);
+    }
+    .specs-table td {
+      padding: 0.75rem 0.5rem;
+    }
+    .specs-table td:first-child {
+      font-weight: 600;
+      color: var(--text-muted);
+      width: 35%;
+    }
+    .specs-table td:last-child {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+      .product-page-layout {
+        grid-template-columns: 1fr;
+      }
+      .gallery-container {
+        position: static;
+      }
+      .main-img-box {
+        height: 320px;
+      }
+      .product-actions-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div><i class="fa-solid fa-bolt" style="color: #F59E0B;"></i> <span>100% Inspected & Refurbished Mobile Store. 6-Month Warranty & Free Express Delivery</span></div>
+      <div class="top-bar-links">
+        <a href="/account.html?tab=tracking"><i class="fa-solid fa-truck-fast"></i> Track Order</a>
+        <a href="/admin" target="_blank" style="color: #38BDF8;"><i class="fa-solid fa-lock"></i> Admin</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-row">
+        <a href="/" class="brand-logo"><img src="/images/logo.svg" alt="A TO Z MOBILES Logo"></a>
+
+        <div class="header-search">
+          <form id="header-search-form" class="search-wrapper">
+            <input type="text" id="header-search-input" class="search-input" placeholder="Search phones..." autocomplete="off">
+            <button type="submit" class="search-btn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </form>
+          <div id="search-dropdown" class="search-dropdown"></div>
+        </div>
+
+        <div class="nav-actions">
+          <a href="#" onclick="AtoZ.openWhatsApp(); return false;" class="badge-whatsapp"><i class="fa-brands fa-whatsapp"></i> <span>Ask an Expert</span></a>
+          <a href="/account.html?tab=wishlist" class="action-pill" title="Wishlist"><i class="fa-regular fa-heart"></i><span class="wishlist-count-badge badge-count" style="display: none;">0</span></a>
+          <a href="/cart.html" class="action-pill" title="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="cart-count-badge badge-count" style="display: none;">0</span></a>
+          <a href="/account.html" class="action-pill" title="Account"><i class="fa-regular fa-user"></i><span class="user-account-label">Account</span></a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sub-nav">
+      <div class="container sub-nav-row">
+        <ul class="nav-links">
+          <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="/shop.html"><i class="fa-solid fa-mobile-screen"></i> All Mobile Phones</a></li>
+          <li><a href="/shop.html?brand=Apple"><i class="fa-brands fa-apple"></i> Apple iPhones</a></li>
+          <li><a href="/shop.html?brand=Samsung"><i class="fa-solid fa-mobile"></i> Samsung Galaxy</a></li>
+          <li><a href="/shop.html?brand=OnePlus"><i class="fa-solid fa-bolt"></i> OnePlus</a></li>
+          <li><a href="/shop.html?brand=Redmi"><i class="fa-solid fa-mobile-screen-button"></i> Redmi / Xiaomi</a></li>
+          <li><a href="/shop.html?max_price=15000" class="highlight"><i class="fa-solid fa-tag"></i> Under ₹15,000</a></li>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Product Details Main Section -->
+  <main class="container">
+    <div id="product-loading" style="text-align: center; padding: 5rem 0;">
+      <i class="fa-solid fa-spinner fa-spin" style="font-size: 2.5rem; color: var(--primary);"></i>
+      <p style="margin-top: 1rem; color: var(--text-muted); font-size: 1.1rem;">Loading refurbished phone details...</p>
+    </div>
+
+    <div id="product-content" style="display: none;">
+      <!-- Breadcrumb -->
+      <div style="font-size: 0.875rem; color: var(--text-muted); padding-top: 1.5rem; display: flex; gap: 0.5rem; align-items: center;">
+        <a href="/">Home</a> / <a href="/shop.html">Shop</a> / <a href="#" id="breadcrumb-brand">Brand</a> / <span id="breadcrumb-title" style="color: var(--text-main); font-weight: 600;">Model</span>
+      </div>
+
+      <div class="product-page-layout">
+        <!-- Left: Image Gallery -->
+        <div class="gallery-container">
+          <div class="main-img-box">
+            <img src="" id="main-image" class="main-product-img" alt="Smartphone">
+            <span id="badge-discount-float" class="badge-discount" style="position: absolute; top: 1.25rem; left: 1.25rem; font-size: 0.8125rem;"></span>
+          </div>
+
+          <!-- Thumbnails -->
+          <div class="thumbnail-row" id="thumbnails-container"></div>
+
+          <!-- Refurbished Certification Trust Badge Box -->
+          <div style="margin-top: 1.5rem; background: #FFFFFF; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem;">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom: 0.75rem;">
+              <i class="fa-solid fa-certificate" style="color: #2563EB; font-size: 1.5rem;"></i>
+              <div>
+                <strong style="font-size: 0.9375rem;">A TO Z Certified Pre-Owned</strong>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Passed 32-point engineering inspection</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 0.75rem; font-size: 0.8125rem; color: #10B981; font-weight: 600;">
+              <span><i class="fa-solid fa-shield-halved"></i> 6 Months Store Warranty</span>
+              <span><i class="fa-solid fa-rotate-left"></i> 7 Days Replacement</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Details, Scorecard, Pricing & CTAs -->
+        <div class="product-info-col">
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+            <span id="product-brand" style="font-size: 0.8125rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">BRAND</span>
+            <span id="product-grade-badge" class="badge-grade"><i class="fa-solid fa-award"></i> Grade</span>
+            <span id="stock-badge" style="font-size: 0.75rem; font-weight: 700; color: #16A34A; background: #DCFCE7; padding: 0.2rem 0.5rem; border-radius: 4px;">In Stock</span>
+          </div>
+
+          <h1 id="product-name" style="font-size: 1.85rem; font-weight: 900; line-height: 1.25; margin-bottom: 0.75rem;"></h1>
+
+          <!-- Ratings & Reviews Header -->
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+            <div style="color: #F59E0B; font-size: 0.9375rem;">
+              <i class="fa-solid fa-star"></i> <strong id="product-rating">4.8</strong>
+            </div>
+            <span style="color: var(--text-muted); font-size: 0.875rem;">(<span id="product-reviews-count">0</span> verified customer reviews)</span>
+          </div>
+
+          <!-- Price Row -->
+          <div style="background: var(--bg-subtle); border-radius: var(--radius-md); padding: 1.25rem; display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.5rem;">
+            <div style="font-size: 2.25rem; font-weight: 900; color: var(--text-main);" id="product-price">₹0</div>
+            <div style="font-size: 1.125rem; color: var(--text-muted); text-decoration: line-through;" id="product-original-price">₹0</div>
+            <div style="font-size: 0.9375rem; font-weight: 800; color: #16A34A;" id="product-savings">Save ₹0</div>
+          </div>
+
+          <!-- Variants (RAM & Storage) -->
+          <div class="variant-group">
+            <div class="variant-title">RAM & Storage Configuration</div>
+            <div class="variant-pills">
+              <div class="variant-pill active" id="pill-ram-storage">8 GB / 128 GB</div>
+            </div>
+          </div>
+
+          <div class="variant-group">
+            <div class="variant-title">Color Finish</div>
+            <div class="variant-pills">
+              <div class="variant-pill active" id="pill-color">Space Black</div>
+            </div>
+          </div>
+
+          <!-- Detailed Condition Scorecard -->
+          <div class="scorecard-card">
+            <div class="scorecard-title">
+              <i class="fa-solid fa-clipboard-check" style="color: var(--primary);"></i>
+              Refurbished Condition Diagnostic Scorecard
+            </div>
+
+            <!-- Battery Health -->
+            <div class="score-metric">
+              <div class="score-label"><i class="fa-solid fa-battery-three-quarters" style="color: #10B981;"></i> Battery Health</div>
+              <div class="battery-bar-container">
+                <div class="battery-bar-track">
+                  <div class="battery-bar-fill" id="battery-fill" style="width: 90%;"></div>
+                </div>
+                <strong id="battery-health-text" style="color: #065F46; font-size: 0.9375rem;">92%</strong>
+              </div>
+            </div>
+
+            <!-- Display Condition -->
+            <div class="score-metric">
+              <div class="score-label"><i class="fa-solid fa-mobile-screen" style="color: var(--primary);"></i> Display</div>
+              <div class="score-value" id="display-condition-text">Flawless (Zero scratches, original OLED)</div>
+            </div>
+
+            <!-- Camera Condition -->
+            <div class="score-metric">
+              <div class="score-label"><i class="fa-solid fa-camera" style="color: #8B5CF6;"></i> Cameras</div>
+              <div class="score-value" id="camera-condition-text">100% Tested (All lenses scratch-free & functional)</div>
+            </div>
+
+            <!-- Body Frame Condition -->
+            <div class="score-metric">
+              <div class="score-label"><i class="fa-solid fa-cube" style="color: #64748B;"></i> Body Frame</div>
+              <div class="score-value" id="body-condition-text">Mint condition (No dents, pristine finish)</div>
+            </div>
+
+            <!-- Warranty -->
+            <div class="score-metric">
+              <div class="score-label"><i class="fa-solid fa-shield-halved" style="color: #2563EB;"></i> Warranty</div>
+              <div class="score-value" id="warranty-text" style="color: var(--primary); font-weight: 700;">6 Months Comprehensive Store Warranty</div>
+            </div>
+          </div>
+
+          <!-- Included Accessories Checklist -->
+          <div class="accessories-box">
+            <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-main);">
+              <i class="fa-solid fa-box-open" style="color: var(--primary);"></i> What's Included in the Box:
+            </div>
+            <div class="accessories-grid" id="accessories-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Action Buttons: Buy Now & Add to Cart & Phone Order -->
+          <div class="product-actions-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 0.75rem;">
+            <button id="btn-quick-call-order" class="btn btn-primary" style="background:#10B981; font-weight:800; font-size:1.05rem; padding:1rem; border:none;">
+              <i class="fa-solid fa-phone-volume"></i> Order by Phone Call
+            </button>
+            <button id="btn-buy-now" class="btn-buy-lg">
+              <i class="fa-solid fa-truck-fast"></i> Buy on Delivery (COD)
+            </button>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; margin-bottom: 1.5rem;">
+            <button id="btn-add-cart" class="btn btn-outline" style="flex:1; padding:0.75rem; font-weight:700;">
+              <i class="fa-solid fa-bag-shopping"></i> Add to Cart
+            </button>
+            <button id="btn-wishlist-detail" class="btn btn-outline" style="width: 52px; padding: 0; display:flex; align-items:center; justify-content:center; font-size: 1.25rem;" title="Add to Wishlist">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+          </div>
+
+          <!-- WhatsApp Direct Enquiry -->
+          <button id="btn-whatsapp-enquire" class="btn btn-whatsapp" style="width: 100%; padding: 0.85rem; font-size: 0.9375rem; margin-bottom: 2rem;">
+            <i class="fa-brands fa-whatsapp"></i> Chat or Request Real Photos on WhatsApp
+          </button>
+
+          <!-- Detailed Technical Description -->
+          <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 1rem;">
+            <h3 style="font-size: 1.125rem; font-weight: 800; margin-bottom: 0.75rem;">Product Overview</h3>
+            <p id="product-description" style="color: var(--text-muted); line-height: 1.7; font-size: 0.9375rem;"></p>
+          </div>
+
+          <!-- Technical Specifications -->
+          <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 1.5rem;">
+            <h3 style="font-size: 1.125rem; font-weight: 800; margin-bottom: 0.75rem;">Technical Specifications</h3>
+            <table class="specs-table" id="specs-table-body"></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Reviews & Review Submission Form Section -->
+      <section style="border-top: 1px solid var(--border-color); padding: 3rem 0; margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 style="font-size: 1.5rem; font-weight: 800;">Customer Reviews</h2>
+            <p style="color: var(--text-muted); font-size: 0.9375rem;">Honest feedback from certified buyers</p>
+          </div>
+          <button id="btn-write-review-toggle" class="btn btn-outline">
+            <i class="fa-solid fa-pen"></i> Write a Review
+          </button>
+        </div>
+
+        <!-- Write Review Form (Collapsible) -->
+        <div id="write-review-box" style="display: none; background: #FFFFFF; border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 2rem;">
+          <h3 style="font-size: 1.125rem; font-weight: 800; margin-bottom: 1rem;">Submit Your Experience</h3>
+          <form id="review-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+              <div>
+                <label style="display:block; font-size:0.8125rem; font-weight:600; margin-bottom:0.35rem;">Your Name *</label>
+                <input type="text" id="rev-name" required placeholder="e.g. Ramesh K." style="width:100%; padding:0.6rem 0.85rem; border:1px solid var(--border-color); border-radius: var(--radius-sm);">
+              </div>
+              <div>
+                <label style="display:block; font-size:0.8125rem; font-weight:600; margin-bottom:0.35rem;">Rating (Stars) *</label>
+                <select id="rev-rating" style="width:100%; padding:0.6rem 0.85rem; border:1px solid var(--border-color); border-radius: var(--radius-sm);">
+                  <option value="5">★★★★★ 5 Stars - Outstanding</option>
+                  <option value="4">★★★★☆ 4 Stars - Very Good</option>
+                  <option value="3">★★★☆☆ 3 Stars - Average</option>
+                  <option value="2">★★☆☆☆ 2 Stars - Below Expectation</option>
+                  <option value="1">★☆☆☆☆ 1 Star - Poor</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem;">
+              <label style="display:block; font-size:0.8125rem; font-weight:600; margin-bottom:0.35rem;">Review Headline</label>
+              <input type="text" id="rev-title" placeholder="e.g. Battery health is great, looks brand new" style="width:100%; padding:0.6rem 0.85rem; border:1px solid var(--border-color); border-radius: var(--radius-sm);">
+            </div>
+            <div style="margin-bottom: 1.25rem;">
+              <label style="display:block; font-size:0.8125rem; font-weight:600; margin-bottom:0.35rem;">Detailed Feedback *</label>
+              <textarea id="rev-comment" required rows="4" placeholder="How was the phone condition, delivery speed, packaging, and performance?" style="width:100%; padding:0.6rem 0.85rem; border:1px solid var(--border-color); border-radius: var(--radius-sm);"></textarea>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Post Review</button>
+              <button type="button" id="btn-cancel-review" class="btn btn-outline">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Reviews List -->
+        <div id="reviews-container" class="reviews-grid">
+          <!-- Loaded dynamically -->
+        </div>
+      </section>
+
+      <!-- Related Phones -->
+      <section style="border-top: 1px solid var(--border-color); padding: 3rem 0;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem;">Similar Refurbished Phones</h2>
+        <div class="products-grid" id="related-products-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Quick Call Order Modal -->
+  <div id="quick-call-modal" class="modal-backdrop" style="display: none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(15,23,42,0.75); z-index:1000; align-items:center; justify-content:center; padding:1rem;">
+    <div style="background:#FFFFFF; border-radius:var(--radius-xl); padding:2rem; max-width:440px; width:100%; box-shadow:var(--shadow-xl);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+        <h3 style="font-size:1.25rem; font-weight:800; color:var(--secondary); display:flex; align-items:center; gap:0.5rem;">
+          <i class="fa-solid fa-phone-volume" style="color:#10B981;"></i> Order by Phone Call
+        </h3>
+        <button type="button" onclick="closeQuickCallModal()" style="font-size:1.5rem; color:#94A3B8;">&times;</button>
+      </div>
+
+      <div style="background:#F8FAFC; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:0.75rem; margin-bottom:1.25rem; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-weight:700; font-size:0.9375rem;" id="qc-phone-title">Phone Model</div>
+          <div style="font-size:0.75rem; color:#10B981; font-weight:700;"><i class="fa-solid fa-shield"></i> 6-Month Store Warranty</div>
+        </div>
+        <strong style="color:var(--primary); font-size:1.15rem;" id="qc-phone-price">₹0</strong>
+      </div>
+
+      <p style="font-size:0.8125rem; color:var(--text-muted); margin-bottom:1rem; line-height:1.5;">
+        Enter your mobile number below. Our store manager will call you within 15 minutes to confirm your order details and delivery address!
+      </p>
+
+      <form id="quick-call-form">
+        <div style="margin-bottom:1rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Your Full Name *</label>
+          <input type="text" id="qc-name" required class="form-input" placeholder="e.g. Ramesh Kumar">
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Mobile Phone Number *</label>
+          <input type="tel" id="qc-phone" required pattern="[0-9]{10}" class="form-input" placeholder="10 Digits Mobile Number" style="font-weight:700; font-size:1.05rem; color:var(--primary);">
+        </div>
+
+        <div style="margin-bottom:1.5rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Your City / Town *</label>
+          <input type="text" id="qc-city" required class="form-input" placeholder="e.g. Chennai">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%; background:#10B981; border:none; font-size:1.05rem;">
+          <i class="fa-solid fa-phone"></i> Confirm Order by Call
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="/images/logo-dark.svg" alt="A TO Z MOBILES" class="footer-logo">
+        <p class="footer-desc">India's trusted certified pre-owned smartphone platform. 32-point tested, 6-month store warranty, fast doorstep insured shipping.</p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Shop Brands</h4>
+        <ul class="footer-links">
+          <li><a href="/shop.html?brand=Apple">Apple iPhones</a></li>
+          <li><a href="/shop.html?brand=Samsung">Samsung Galaxy</a></li>
+          <li><a href="/shop.html?brand=OnePlus">OnePlus Mobiles</a></li>
+          <li><a href="/shop.html?brand=Redmi">Redmi Xiaomi</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Store Policies</h4>
+        <ul class="footer-links">
+          <li><a href="/policy.html#warranty">6-Month Warranty</a></li>
+          <li><a href="/policy.html#replacement">7-Day Replacement</a></li>
+          <li><a href="/policy.html#shipping">Insured Shipping</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Support</h4>
+        <ul class="footer-links">
+          <li><a href="/account.html?tab=tracking">Track Your Order</a></li>
+          <li><a href="/contact.html">Store Location</a></li>
+          <li><a href="/admin">Admin Panel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Address</h4>
+        <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>Chennai - 600040</span></div>
+        <div class="footer-contact-item"><i class="fa-solid fa-phone"></i><span>+91 98765 43210</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container"><div>&copy; 2026 A TO Z MOBILES. All rights reserved.</div></div>
+    </div>
+  </footer>
+
+  <a href="#" id="floating-whatsapp" class="floating-whatsapp" title="WhatsApp Support"><i class="fa-brands fa-whatsapp"></i></a>
+
+  <!-- Mobile Sticky Bottom Product Bar -->
+  <div class="mobile-sticky-product-bar" id="mobile-sticky-bar">
+    <div class="sticky-price-box">
+      <div id="sticky-mobile-price" class="sticky-price-val">₹0</div>
+      <div id="sticky-mobile-discount" class="sticky-discount-val"></div>
+    </div>
+    <button onclick="document.getElementById('btn-quick-call-order').click()" class="mobile-sticky-call-btn">
+      <i class="fa-solid fa-phone-volume"></i> Order by Call
+    </button>
+    <button onclick="document.getElementById('btn-buy-now').click()" class="mobile-sticky-buy-btn">
+      <i class="fa-solid fa-truck-fast"></i> Buy COD
+    </button>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+
+  <script>
+    let currentProduct = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+
+      if (!productId) {
+        window.location.href = '/shop.html';
+        return;
+      }
+
+      try {
+        const res = await window.api.getProduct(productId);
+        if (!res.success || !res.product) {
+          document.getElementById('product-loading').innerHTML = `
+            <h2 style="font-size:1.5rem; font-weight:800;">Phone Not Found</h2>
+            <p style="margin: 1rem 0; color: var(--text-muted);">The refurbished phone you are looking for has been sold or is unavailable.</p>
+            <a href="/shop.html" class="btn btn-primary">Browse Available Phones</a>
+          `;
+          return;
+        }
+
+        currentProduct = res.product;
+        populateProductDetails(res.product, res.reviews, res.related);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+      }
+    });
+
+    function populateProductDetails(p, reviews, related) {
+      document.title = `${p.name} - Refurbished | A TO Z MOBILES`;
+      document.getElementById('product-loading').style.display = 'none';
+      document.getElementById('product-content').style.display = 'block';
+
+      // Breadcrumb
+      document.getElementById('breadcrumb-brand').textContent = p.brand;
+      document.getElementById('breadcrumb-brand').href = `/shop.html?brand=${encodeURIComponent(p.brand)}`;
+      document.getElementById('breadcrumb-title').textContent = p.name;
+
+      // Brand & Badges
+      document.getElementById('product-brand').textContent = p.brand;
+      document.getElementById('product-grade-badge').innerHTML = `<i class="fa-solid fa-award"></i> ${p.grade}`;
+      
+      const stockBadge = document.getElementById('stock-badge');
+      if (p.stock > 0) {
+        stockBadge.textContent = p.stock <= 2 ? `Only ${p.stock} left in stock!` : `In Stock (${p.stock} available)`;
+        if (p.stock <= 2) {
+          stockBadge.style.color = '#B45309';
+          stockBadge.style.background = '#FEF3C7';
+        }
+      } else {
+        stockBadge.textContent = 'Out of Stock';
+        stockBadge.style.color = '#DC2626';
+        stockBadge.style.background = '#FEE2E2';
+      }
+
+      // Title & Rating
+      document.getElementById('product-name').textContent = p.name;
+      document.getElementById('product-rating').textContent = p.rating || '4.8';
+      document.getElementById('product-reviews-count').textContent = p.reviews_count || '0';
+
+      // Pricing
+      document.getElementById('product-price').textContent = AtoZ.formatCurrency(p.selling_price);
+      document.getElementById('product-original-price').textContent = AtoZ.formatCurrency(p.original_price);
+      document.getElementById('product-savings').textContent = `Save ${AtoZ.formatCurrency(p.original_price - p.selling_price)} (${p.discount_percent}% OFF)`;
+      
+      if (document.getElementById('sticky-mobile-price')) {
+        document.getElementById('sticky-mobile-price').textContent = AtoZ.formatCurrency(p.selling_price);
+      }
+      if (document.getElementById('sticky-mobile-discount')) {
+        document.getElementById('sticky-mobile-discount').textContent = p.discount_percent > 0 ? `${p.discount_percent}% OFF` : '';
+      }
+      
+      const badgeDisc = document.getElementById('badge-discount-float');
+      if (p.discount_percent > 0) {
+        badgeDisc.textContent = `${p.discount_percent}% OFF`;
+        badgeDisc.style.display = 'inline-block';
+      } else {
+        badgeDisc.style.display = 'none';
+      }
+
+      // Variants
+      document.getElementById('pill-ram-storage').textContent = `${p.ram} RAM / ${p.storage} Storage`;
+      document.getElementById('pill-color').textContent = p.color || 'Standard';
+
+      // Condition Scorecard
+      document.getElementById('battery-fill').style.width = `${Math.min(100, p.battery_health)}%`;
+      document.getElementById('battery-health-text').textContent = `${p.battery_health}% Tested`;
+      document.getElementById('display-condition-text').textContent = p.display_condition;
+      document.getElementById('camera-condition-text').textContent = p.camera_condition;
+      document.getElementById('body-condition-text').textContent = p.body_condition;
+      document.getElementById('warranty-text').textContent = p.warranty;
+
+      // Accessories
+      const accList = document.getElementById('accessories-list');
+      const accessories = Array.isArray(p.accessories_included) ? p.accessories_included : [];
+      accList.innerHTML = accessories.map(a => `
+        <div class="acc-item"><i class="fa-solid fa-circle-check"></i> ${a}</div>
+      `).join('');
+
+      // Description
+      document.getElementById('product-description').textContent = p.description || 'Certified pre-owned smartphone thoroughly tested by A TO Z MOBILES technicians.';
+
+      // Specs Table
+      const specsBody = document.getElementById('specs-table-body');
+      let specs = p.specs || {};
+      let specsRows = '';
+      if (typeof specs === 'object') {
+        Object.entries(specs).forEach(([k, v]) => {
+          const formattedKey = k.charAt(0).toUpperCase() + k.slice(1);
+          specsRows += `<tr><td>${formattedKey}</td><td>${v}</td></tr>`;
+        });
+      }
+      specsRows += `
+        <tr><td>Refurbished Grade</td><td>${p.grade}</td></tr>
+        <tr><td>Battery Health</td><td>${p.battery_health}% Tested Original</td></tr>
+        <tr><td>Store Warranty</td><td>${p.warranty}</td></tr>
+        <tr><td>Tested IMEIs</td><td>Clean & Registered (Passed Police Verification)</td></tr>
+      `;
+      specsBody.innerHTML = specsRows;
+
+      // Gallery Images
+      const images = Array.isArray(p.images) && p.images.length > 0 ? p.images : ['https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500'];
+      const mainImg = document.getElementById('main-image');
+      mainImg.src = images[0];
+
+      const thumbContainer = document.getElementById('thumbnails-container');
+      thumbContainer.innerHTML = images.map((img, idx) => `
+        <button class="thumb-btn ${idx === 0 ? 'active' : ''}" onclick="switchGalleryImage('${img}', this)">
+          <img src="${img}" class="thumb-img" alt="Thumbnail">
+        </button>
+      `).join('');
+
+      // Wishlist Button State
+      const wishBtn = document.getElementById('btn-wishlist-detail');
+      if (AtoZ.isInWishlist(p.id)) {
+        wishBtn.innerHTML = '<i class="fa-solid fa-heart" style="color: #EF4444;"></i>';
+      }
+      wishBtn.onclick = () => {
+        const added = AtoZ.toggleWishlist(p);
+        wishBtn.innerHTML = added ? '<i class="fa-solid fa-heart" style="color: #EF4444;"></i>' : '<i class="fa-regular fa-heart"></i>';
+      };
+
+      // Add to Cart & Buy Now Click Handlers
+      document.getElementById('btn-add-cart').onclick = () => {
+        AtoZ.addToCart(p, 1);
+      };
+
+      document.getElementById('btn-buy-now').onclick = () => {
+        AtoZ.addToCart(p, 1, false);
+        window.location.href = `/checkout.html?buyNowId=${p.id}`;
+      };
+
+      // Quick Call Order Modal Handlers
+      document.getElementById('btn-quick-call-order').onclick = () => {
+        document.getElementById('qc-phone-title').textContent = p.name;
+        document.getElementById('qc-phone-price').textContent = AtoZ.formatCurrency(p.selling_price);
+        document.getElementById('quick-call-modal').style.display = 'flex';
+      };
+
+      window.closeQuickCallModal = function() {
+        document.getElementById('quick-call-modal').style.display = 'none';
+      };
+
+      document.getElementById('quick-call-form').onsubmit = async (e) => {
+        e.preventDefault();
+        const payload = {
+          productId: p.id,
+          name: document.getElementById('qc-name').value.trim(),
+          phone: document.getElementById('qc-phone').value.trim(),
+          city: document.getElementById('qc-city').value.trim()
+        };
+
+        try {
+          const res = await fetch('/api/orders/quick-call', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (data.success) {
+            window.location.href = `/order-success.html?orderId=${data.orderId}&phone=${encodeURIComponent(payload.phone)}&name=${encodeURIComponent(payload.name)}`;
+          } else {
+            alert(data.message || 'Could not place order');
+          }
+        } catch(err) {
+          alert('Network error placing call order');
+        }
+      };
+
+      // WhatsApp Enquire
+      document.getElementById('btn-whatsapp-enquire').onclick = () => {
+        AtoZ.openWhatsApp(p.name, AtoZ.formatCurrency(p.selling_price));
+      };
+
+      // Populate Reviews
+      renderReviews(reviews);
+
+      // Populate Related Phones
+      const relatedGrid = document.getElementById('related-products-grid');
+      if (related && related.length > 0) {
+        relatedGrid.innerHTML = related.map(item => `
+          <div class="product-card">
+            <a href="/product.html?id=${item.id}" class="card-media">
+              <img src="${item.images[0] || 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400'}" class="card-img" alt="${item.name}">
+            </a>
+            <div class="card-body">
+              <div class="card-brand">${item.brand}</div>
+              <a href="/product.html?id=${item.id}" class="card-title">${item.name}</a>
+              <div class="card-condition-row">
+                <span class="pill-battery"><i class="fa-solid fa-battery-three-quarters"></i> ${item.battery_health}%</span>
+                <span class="pill-spec">${item.grade}</span>
+              </div>
+              <div class="card-price-box">
+                <span class="price-current">${AtoZ.formatCurrency(item.selling_price)}</span>
+                <span class="price-original">${AtoZ.formatCurrency(item.original_price)}</span>
+              </div>
+              <a href="/product.html?id=${item.id}" class="btn btn-outline" style="width: 100%; font-size: 0.8125rem;">View Deal</a>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        relatedGrid.innerHTML = '<p style="color:var(--text-muted); grid-column:1/-1;">No other phones from this brand in inventory.</p>';
+      }
+    }
+
+    function switchGalleryImage(url, btn) {
+      document.getElementById('main-image').src = url;
+      document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function renderReviews(reviews) {
+      const container = document.getElementById('reviews-container');
+      if (!reviews || reviews.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1/-1; color: var(--text-muted); font-size: 0.9375rem;">Be the first customer to review this certified phone!</p>';
+        return;
+      }
+      container.innerHTML = reviews.map(r => `
+        <div class="review-card">
+          <div class="review-stars">
+            ${Array(r.rating).fill('<i class="fa-solid fa-star"></i>').join('')}
+          </div>
+          <div class="review-title">${r.title || 'Verified Purchase'}</div>
+          <p class="review-body">${r.comment}</p>
+          <div class="review-author">
+            <span class="author-name">${r.user_name}</span>
+            <span class="author-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Review Form Toggle & Submit
+    const reviewToggleBtn = document.getElementById('btn-write-review-toggle');
+    const reviewBox = document.getElementById('write-review-box');
+    const cancelRevBtn = document.getElementById('btn-cancel-review');
+
+    if (reviewToggleBtn && reviewBox) {
+      reviewToggleBtn.addEventListener('click', () => {
+        reviewBox.style.display = reviewBox.style.display === 'none' ? 'block' : 'none';
+      });
+    }
+    if (cancelRevBtn && reviewBox) {
+      cancelRevBtn.addEventListener('click', () => {
+        reviewBox.style.display = 'none';
+      });
+    }
+
+    const reviewForm = document.getElementById('review-form');
+    if (reviewForm) {
+      reviewForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!currentProduct) return;
+
+        const payload = {
+          product_id: currentProduct.id,
+          user_name: document.getElementById('rev-name').value,
+          rating: document.getElementById('rev-rating').value,
+          title: document.getElementById('rev-title').value,
+          comment: document.getElementById('rev-comment').value
+        };
+
+        try {
+          const res = await window.api.submitReview(payload);
+          if (res.success) {
+            AtoZ.showToast(res.message, 'success');
+            reviewBox.style.display = 'none';
+            reviewForm.reset();
+            // Refresh reviews
+            const revRes = await window.api.getProduct(currentProduct.id);
+            if (revRes.success) {
+              renderReviews(revRes.reviews);
+              document.getElementById('product-rating').textContent = revRes.product.rating;
+              document.getElementById('product-reviews-count').textContent = revRes.product.reviews_count;
+            }
+          } else {
+            AtoZ.showToast(res.message, 'error');
+          }
+        } catch (err) {
+          console.error(err);
+          AtoZ.showToast('Failed to submit review', 'error');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

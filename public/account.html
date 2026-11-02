@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Account & Orders - A TO Z MOBILES</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .account-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2.5rem;
+      padding: 3rem 0 5rem;
+    }
+
+    .account-sidebar {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      height: fit-content;
+    }
+    .user-profile-summary {
+      text-align: center;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .user-avatar-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-full);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .account-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .account-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      width: 100%;
+      text-align: left;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+    .account-nav-btn:hover, .account-nav-btn.active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .account-content-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .card-pane-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Auth Form Cards */
+    .auth-container {
+      max-width: 480px;
+      margin: 3.5rem auto 5rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .auth-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+    .auth-tab-btn {
+      flex: 1;
+      text-align: center;
+      padding: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all var(--transition-fast);
+    }
+    .auth-tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* Order History Card */
+    .order-card {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: #FFFFFF;
+    }
+    .order-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.85rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .status-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-pill.paid { background: #ECFDF5; color: #047857; }
+    .status-pill.dispatched { background: #EFF6FF; color: #1D4ED8; }
+    .status-pill.delivered { background: #F0FDF4; color: #15803D; }
+    .status-pill.pending { background: #FFFBEB; color: #B45309; }
+
+    @media (max-width: 800px) {
+      .account-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-row">
+        <a href="/" class="brand-logo"><img src="/images/logo.svg" alt="A TO Z MOBILES Logo"></a>
+
+        <div class="header-search">
+          <form id="header-search-form" class="search-wrapper">
+            <input type="text" id="header-search-input" class="search-input" placeholder="Search..." autocomplete="off">
+            <button type="submit" class="search-btn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </form>
+          <div id="search-dropdown" class="search-dropdown"></div>
+        </div>
+
+        <div class="nav-actions">
+          <a href="#" onclick="AtoZ.openWhatsApp(); return false;" class="badge-whatsapp"><i class="fa-brands fa-whatsapp"></i> <span>Help</span></a>
+          <a href="/cart.html" class="action-pill" title="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="cart-count-badge badge-count" style="display: none;">0</span></a>
+          <a href="/account.html" class="action-pill" title="Account"><i class="fa-regular fa-user"></i><span class="user-account-label">Account</span></a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sub-nav">
+      <div class="container sub-nav-row">
+        <ul class="nav-links">
+          <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="/shop.html"><i class="fa-solid fa-mobile-screen"></i> All Mobile Phones</a></li>
+          <li><a href="/shop.html?brand=Apple"><i class="fa-brands fa-apple"></i> Apple iPhones</a></li>
+          <li><a href="/shop.html?brand=Samsung"><i class="fa-solid fa-mobile"></i> Samsung Galaxy</a></li>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- View 1: Not Logged In Auth Container (Login / Register) -->
+    <div id="auth-view" class="auth-container" style="display: none;">
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="tab-btn-login" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab-btn" id="tab-btn-register" onclick="switchAuthTab('register')">Create Account</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form">
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Email Address</label>
+          <input type="email" id="login-email" required class="form-input" placeholder="e.g. customer@atozmobiles.in">
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Password</label>
+          <input type="password" id="login-pass" required class="form-input" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-bottom: 1rem;">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In to Account
+        </button>
+
+        <!-- 1-Click Demo Login Helper -->
+        <div style="background: var(--bg-subtle); border-radius: var(--radius-md); padding: 0.85rem; text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: 1rem;">
+          <span>Quick Testing Demo Account:</span>
+          <div style="margin-top: 0.35rem;">
+            <button type="button" onclick="fillDemoCustomer()" class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-user-check"></i> Fill Demo Customer (1-Click)
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" style="display: none;">
+        <div style="margin-bottom: 1rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Full Name *</label>
+          <input type="text" id="reg-name" required class="form-input" placeholder="e.g. Ramesh Kumar">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Email Address *</label>
+          <input type="email" id="reg-email" required class="form-input" placeholder="e.g. ramesh@gmail.com">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Mobile Phone *</label>
+          <input type="tel" id="reg-phone" required class="form-input" placeholder="10 digits phone">
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem;">Create Password *</label>
+          <input type="password" id="reg-pass" required class="form-input" placeholder="Minimum 6 characters">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+          <i class="fa-solid fa-user-plus"></i> Create Customer Account
+        </button>
+      </form>
+    </div>
+
+    <!-- View 2: Logged In Customer Dashboard -->
+    <div id="dashboard-view" class="account-layout" style="display: none;">
+      <!-- Sidebar -->
+      <aside class="account-sidebar">
+        <div class="user-profile-summary">
+          <div class="user-avatar-circle"><i class="fa-solid fa-user"></i></div>
+          <h3 id="side-user-name" style="font-size: 1.125rem; font-weight: 800;">Customer Name</h3>
+          <p id="side-user-email" style="font-size: 0.8125rem; color: var(--text-muted);">customer@email.com</p>
+        </div>
+
+        <ul class="account-nav-list">
+          <li>
+            <button class="account-nav-btn active" onclick="switchPane('orders')" id="btn-pane-orders">
+              <i class="fa-solid fa-box"></i> My Orders
+            </button>
+          </li>
+          <li>
+            <button class="account-nav-btn" onclick="switchPane('tracking')" id="btn-pane-tracking">
+              <i class="fa-solid fa-truck-fast"></i> Track Order
+            </button>
+          </li>
+          <li>
+            <button class="account-nav-btn" onclick="switchPane('wishlist')" id="btn-pane-wishlist">
+              <i class="fa-regular fa-heart"></i> My Wishlist
+            </button>
+          </li>
+          <li>
+            <button class="account-nav-btn" onclick="switchPane('profile')" id="btn-pane-profile">
+              <i class="fa-solid fa-address-card"></i> Saved Address & Profile
+            </button>
+          </li>
+          <li style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
+            <button class="account-nav-btn" onclick="logoutCustomer()" style="color: #DC2626;">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+            </button>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Panes -->
+      <section class="account-content-card">
+        <!-- Pane 1: Orders -->
+        <div id="pane-orders">
+          <h2 class="card-pane-title">
+            <span><i class="fa-solid fa-box" style="color: var(--primary);"></i> Order History</span>
+          </h2>
+          <div id="user-orders-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Pane 2: Live Tracking Search -->
+        <div id="pane-tracking" style="display: none;">
+          <h2 class="card-pane-title">
+            <span><i class="fa-solid fa-truck-fast" style="color: var(--primary);"></i> Live Order Tracking</span>
+          </h2>
+          <form id="track-form" style="display: flex; gap: 0.75rem; margin-bottom: 2rem;">
+            <input type="text" id="track-input" required class="form-input" placeholder="Enter Order ID (e.g. AZM-2026-87421)" style="font-family: monospace;">
+            <button type="submit" class="btn btn-primary" style="flex-shrink: 0;"><i class="fa-solid fa-magnifying-glass"></i> Track Package</button>
+          </form>
+
+          <div id="track-result-box" style="display: none;">
+            <!-- Populated with live status -->
+          </div>
+        </div>
+
+        <!-- Pane 3: Wishlist -->
+        <div id="pane-wishlist" style="display: none;">
+          <h2 class="card-pane-title">
+            <span><i class="fa-regular fa-heart" style="color: #EF4444;"></i> Saved Wishlist</span>
+          </h2>
+          <div id="wishlist-grid" class="products-grid"></div>
+        </div>
+
+        <!-- Pane 4: Profile & Address -->
+        <div id="pane-profile" style="display: none;">
+          <h2 class="card-pane-title">
+            <span><i class="fa-solid fa-address-card" style="color: var(--primary);"></i> Customer Profile & Shipping Address</span>
+          </h2>
+          <form id="profile-form">
+            <div class="form-grid-2">
+              <div>
+                <label class="form-label">Full Name</label>
+                <input type="text" id="prof-name" class="form-input" required>
+              </div>
+              <div>
+                <label class="form-label">Phone Number</label>
+                <input type="tel" id="prof-phone" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Shipping Address</label>
+              <textarea id="prof-address" rows="3" class="form-input"></textarea>
+            </div>
+
+            <div class="form-grid-2">
+              <div>
+                <label class="form-label">City</label>
+                <input type="text" id="prof-city" class="form-input">
+              </div>
+              <div>
+                <label class="form-label">State</label>
+                <input type="text" id="prof-state" class="form-input">
+              </div>
+            </div>
+
+            <div class="form-group" style="max-width: 200px;">
+              <label class="form-label">PIN Code</label>
+              <input type="text" id="prof-pincode" class="form-input">
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-floppy-disk"></i> Save Profile Details
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>&copy; 2026 A TO Z MOBILES. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      checkAuthAndRender();
+
+      // Check URL tab parameter
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab) switchPane(tab);
+    });
+
+    async function checkAuthAndRender() {
+      const token = window.api.getToken();
+      if (!token) {
+        document.getElementById('auth-view').style.display = 'block';
+        document.getElementById('dashboard-view').style.display = 'none';
+        return;
+      }
+
+      try {
+        const res = await window.api.getProfile();
+        if (res.success && res.user) {
+          document.getElementById('auth-view').style.display = 'none';
+          document.getElementById('dashboard-view').style.display = 'grid';
+
+          document.getElementById('side-user-name').textContent = res.user.name;
+          document.getElementById('side-user-email').textContent = res.user.email;
+
+          // Fill Profile Form
+          document.getElementById('prof-name').value = res.user.name || '';
+          document.getElementById('prof-phone').value = res.user.phone || '';
+          document.getElementById('prof-address').value = res.user.address || '';
+          document.getElementById('prof-city').value = res.user.city || '';
+          document.getElementById('prof-state').value = res.user.state || '';
+          document.getElementById('prof-pincode').value = res.user.pincode || '';
+
+          renderOrders(res.orders || []);
+          renderWishlist();
+        } else {
+          window.api.logout();
+          document.getElementById('auth-view').style.display = 'block';
+          document.getElementById('dashboard-view').style.display = 'none';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function switchAuthTab(type) {
+      if (type === 'login') {
+        document.getElementById('tab-btn-login').classList.add('active');
+        document.getElementById('tab-btn-register').classList.remove('active');
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('register-form').style.display = 'none';
+      } else {
+        document.getElementById('tab-btn-register').classList.add('active');
+        document.getElementById('tab-btn-login').classList.remove('active');
+        document.getElementById('register-form').style.display = 'block';
+        document.getElementById('login-form').style.display = 'none';
+      }
+    }
+
+    function switchPane(pane) {
+      ['orders', 'tracking', 'wishlist', 'profile'].forEach(p => {
+        const el = document.getElementById(`pane-${p}`);
+        const btn = document.getElementById(`btn-pane-${p}`);
+        if (el) el.style.display = (p === pane) ? 'block' : 'none';
+        if (btn) btn.classList.toggle('active', p === pane);
+      });
+      if (pane === 'wishlist') renderWishlist();
+    }
+
+    function fillDemoCustomer() {
+      document.getElementById('login-email').value = 'customer@atozmobiles.in';
+      document.getElementById('login-pass').value = 'customer123';
+    }
+
+    // Login Form Submit
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-pass').value;
+
+      try {
+        const res = await window.api.login(email, pass);
+        if (res.success) {
+          AtoZ.showToast('Logged in successfully!', 'success');
+          checkAuthAndRender();
+        } else {
+          AtoZ.showToast(res.message, 'error');
+        }
+      } catch (err) {
+        AtoZ.showToast('Login failed', 'error');
+      }
+    });
+
+    // Register Form Submit
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('reg-name').value.trim(),
+        email: document.getElementById('reg-email').value.trim(),
+        phone: document.getElementById('reg-phone').value.trim(),
+        password: document.getElementById('reg-pass').value
+      };
+
+      try {
+        const res = await window.api.register(payload);
+        if (res.success) {
+          AtoZ.showToast('Registration successful! Welcome to A TO Z MOBILES.', 'success');
+          checkAuthAndRender();
+        } else {
+          AtoZ.showToast(res.message, 'error');
+        }
+      } catch (err) {
+        AtoZ.showToast('Registration failed', 'error');
+      }
+    });
+
+    // Profile Form Submit
+    document.getElementById('profile-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('prof-name').value.trim(),
+        phone: document.getElementById('prof-phone').value.trim(),
+        address: document.getElementById('prof-address').value.trim(),
+        city: document.getElementById('prof-city').value.trim(),
+        state: document.getElementById('prof-state').value.trim(),
+        pincode: document.getElementById('prof-pincode').value.trim()
+      };
+
+      try {
+        const res = await window.api.updateProfile(payload);
+        if (res.success) {
+          AtoZ.showToast('Profile and address saved!', 'success');
+        } else {
+          AtoZ.showToast(res.message, 'error');
+        }
+      } catch (err) {
+        AtoZ.showToast('Update failed', 'error');
+      }
+    });
+
+    function logoutCustomer() {
+      window.api.logout();
+      AtoZ.showToast('Signed out', 'info');
+      checkAuthAndRender();
+    }
+
+    function renderOrders(orders) {
+      const container = document.getElementById('user-orders-list');
+      if (!orders || orders.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted); text-align:center; padding:2rem;">No orders placed yet. Start browsing refurbished phones!</p>';
+        return;
+      }
+
+      container.innerHTML = orders.map(o => {
+        const statusClass = (o.order_status || '').toLowerCase();
+        return `
+          <div class="order-card">
+            <div class="order-card-header">
+              <div>
+                <strong>Order ${o.order_id}</strong>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Placed on ${new Date(o.created_at).toLocaleDateString('en-IN')}</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.75rem;">
+                <span class="status-pill ${statusClass}">${o.order_status}</span>
+                <a href="/order-success.html?orderId=${o.order_id}" class="btn btn-outline btn-sm">
+                  <i class="fa-solid fa-receipt"></i> View Invoice
+                </a>
+              </div>
+            </div>
+
+            <div>
+              ${(o.items || []).map(i => `
+                <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem; font-size:0.875rem;">
+                  <img src="${i.image || 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=60'}" style="width:40px; height:40px; object-fit:contain; border-radius:4px; background:#F8FAFC; border:1px solid var(--border-color);">
+                  <div style="flex:1;">
+                    <strong>${i.name}</strong>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">${i.ram || ''} / ${i.storage || ''} &bull; Qty: ${i.quantity}</div>
+                  </div>
+                  <strong style="color:var(--text-main);">${AtoZ.formatCurrency(i.price * i.quantity)}</strong>
+                </div>
+              `).join('')}
+            </div>
+
+            <div style="border-top:1px solid var(--border-color); padding-top:0.75rem; margin-top:0.75rem; display:flex; justify-content:space-between; align-items:center; font-size:0.875rem;">
+              <div>
+                <span style="color:var(--text-muted);">Tracking:</span> <strong>${o.tracking_number || 'Blue Dart (Generating)'}</strong>
+              </div>
+              <div>
+                <span>Total:</span> <strong style="color:var(--primary); font-size:1.1rem;">${AtoZ.formatCurrency(o.total_amount)}</strong>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderWishlist() {
+      const container = document.getElementById('wishlist-grid');
+      const wishlist = AtoZ.AppState.wishlist;
+
+      if (!wishlist || wishlist.length === 0) {
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:2rem; color:var(--text-muted);">Your wishlist is empty. Browse phones and click the heart icon to save!</p>';
+        return;
+      }
+
+      container.innerHTML = wishlist.map(p => `
+        <div class="product-card">
+          <a href="/product.html?id=${p.id}" class="card-media">
+            <img src="${p.image || 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=300'}" class="card-img" alt="${p.name}">
+          </a>
+          <div class="card-body">
+            <div class="card-brand">${p.brand}</div>
+            <a href="/product.html?id=${p.id}" class="card-title">${p.name}</a>
+            <div class="card-condition-row">
+              <span class="pill-battery"><i class="fa-solid fa-battery-three-quarters"></i> ${p.battery_health}%</span>
+              <span class="pill-spec">${p.grade}</span>
+            </div>
+            <div class="card-price-box">
+              <span class="price-current">${AtoZ.formatCurrency(p.price)}</span>
+            </div>
+            <button onclick="moveWishlistToCart(${p.id})" class="btn btn-primary btn-sm" style="width:100%;">
+              <i class="fa-solid fa-bag-shopping"></i> Move to Cart
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function moveWishlistToCart(productId) {
+      try {
+        const res = await window.api.getProduct(productId);
+        if (res.success && res.product) {
+          AtoZ.addToCart(res.product, 1);
+          AtoZ.toggleWishlist(res.product); // removes from wishlist
+          renderWishlist();
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Live Tracking form
+    document.getElementById('track-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const orderId = document.getElementById('track-input').value.trim();
+      const resultBox = document.getElementById('track-result-box');
+
+      resultBox.style.display = 'block';
+      resultBox.innerHTML = '<p style="text-align:center; padding:1.5rem;"><i class="fa-solid fa-spinner fa-spin"></i> Fetching live status...</p>';
+
+      try {
+        const res = await window.api.trackOrder(orderId);
+        if (res.success && res.order) {
+          const o = res.order;
+          resultBox.innerHTML = `
+            <div style="background:#F8FAFC; border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:1.5rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem;">
+                <div>
+                  <h3 style="font-size:1.15rem; font-weight:800;">Package Status: ${o.order_status}</h3>
+                  <div style="font-size:0.8125rem; color:var(--text-muted);">Destination: ${o.city}, ${o.state} (${o.pincode})</div>
+                </div>
+                <span class="status-pill paid">${o.payment_status}</span>
+              </div>
+              <div style="font-size:0.875rem; line-height:1.7;">
+                <div><strong>Courier Partner:</strong> ${o.courier_partner || 'Blue Dart Express'}</div>
+                <div><strong>AWB Tracking Number:</strong> <span style="font-family:monospace; color:var(--primary); font-weight:700;">${o.tracking_number}</span></div>
+                <div><strong>Fulfillment Stage:</strong> Step ${res.currentStepIndex + 1} of 6 Completed</div>
+              </div>
+              <div style="margin-top:1.25rem;">
+                <a href="/order-success.html?orderId=${o.order_id}" class="btn btn-outline btn-sm">
+                  <i class="fa-solid fa-receipt"></i> View Official Invoice
+                </a>
+              </div>
+            </div>
+          `;
+        } else {
+          resultBox.innerHTML = '<p style="color:#DC2626; text-align:center; padding:1.5rem;">Order ID not found. Please check your reference code.</p>';
+        }
+      } catch (err) {
+        resultBox.innerHTML = '<p style="color:#DC2626; text-align:center; padding:1.5rem;">Unable to track order right now.</p>';
+      }
+    });
+  </script>
+</body>
+</html>

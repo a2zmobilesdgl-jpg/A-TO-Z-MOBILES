@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="favGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#0F172A"/>
+  <!-- Phone outline -->
+  <rect x="14" y="8" width="36" height="48" rx="8" stroke="url(#favGrad)" stroke-width="3" fill="#1E293B"/>
+  <!-- Speaker -->
+  <line x1="26" y1="13" x2="38" y2="13" stroke="#64748B" stroke-width="2" stroke-linecap="round"/>
+  <!-- 'A' letterform -->
+  <path d="M24 38 L32 20 L40 38" stroke="url(#favGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26 33 L38 33" stroke="url(#favGrad)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Z flourish -->
+  <path d="M26 41 L38 41 L27 49 L39 49" stroke="#06B6D4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Home indicator -->
+  <line x1="27" y1="52" x2="37" y2="52" stroke="#06B6D4" stroke-width="2" stroke-linecap="round"/>
+  <!-- Verified dot -->
+  <circle cx="48" cy="14" r="5" fill="#10B981"/>
+</svg>

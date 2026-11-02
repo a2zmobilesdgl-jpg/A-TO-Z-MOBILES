@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - A TO Z MOBILES (Call to Confirm Order)</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 3rem;
+      padding: 3rem 0 5rem;
+    }
+
+    .checkout-section {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .checkout-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.75rem;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 0.9375rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color var(--transition-fast);
+      background: #FFFFFF;
+    }
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .payment-option-card {
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      background: #EFF6FF;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .payment-radio {
+      margin-top: 4px;
+      accent-color: var(--primary);
+      width: 20px;
+      height: 20px;
+    }
+    .payment-info { flex: 1; }
+    .payment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .payment-name {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+    .payment-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .review-item-mini {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.875rem;
+    }
+    .review-item-img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      background: #F8FAFC;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      padding: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-row" style="justify-content: space-between;">
+        <a href="/" class="brand-logo"><img src="/images/logo.svg" alt="A TO Z MOBILES Logo"></a>
+        <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.875rem; color:#10B981; font-weight:700;">
+          <i class="fa-solid fa-phone-volume"></i> Phone Call Verified Orders &bull; Zero Online Payment Risk
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <form id="checkout-form" class="checkout-layout">
+      <!-- Left Column -->
+      <div>
+        <!-- 1. Contact & Delivery Address -->
+        <div class="checkout-section">
+          <h2 class="checkout-title"><i class="fa-solid fa-user-check" style="color: var(--primary);"></i> 1. Contact & Shipping Details</h2>
+          <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:1.5rem;">
+            Please enter your active phone number. Our team will call you to confirm your order details and verify your address before packing.
+          </p>
+
+          <div class="form-grid-2">
+            <div>
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="cust-name" required class="form-input" placeholder="e.g. Rahul Sharma">
+            </div>
+            <div>
+              <label class="form-label">Active Mobile Phone Number (We will call you) *</label>
+              <input type="tel" id="cust-phone" required class="form-input" placeholder="e.g. 9840123456" pattern="[0-9]{10}" style="font-weight:700; font-size:1.05rem; color:var(--primary);">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address (Optional for Bill)</label>
+            <input type="email" id="cust-email" class="form-input" placeholder="e.g. rahul@gmail.com">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Complete Delivery Address (Door No, Street, Area, Landmark) *</label>
+            <textarea id="cust-address" required rows="3" class="form-input" placeholder="e.g. Flat 4B, Green Meadows, 12th Cross Street, Near Apollo Hospital"></textarea>
+          </div>
+
+          <div class="form-grid-2">
+            <div>
+              <label class="form-label">City / Town *</label>
+              <input type="text" id="cust-city" required class="form-input" placeholder="e.g. Chennai">
+            </div>
+            <div>
+              <label class="form-label">State *</label>
+              <input type="text" id="cust-state" required class="form-input" placeholder="e.g. Tamil Nadu">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div>
+              <label class="form-label">PIN Code *</label>
+              <input type="text" id="cust-pincode" required class="form-input" placeholder="e.g. 600017" pattern="[0-9]{6}">
+            </div>
+            <div style="display:flex; align-items:flex-end; padding-bottom:5px;">
+              <span style="font-size: 0.8125rem; color: #10B981; font-weight: 700;">
+                <i class="fa-solid fa-circle-check"></i> Free Express Delivery Eligible
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Payment & Confirmation Option -->
+        <div class="checkout-section">
+          <h2 class="checkout-title"><i class="fa-solid fa-phone-volume" style="color: #10B981;"></i> 2. Order Confirmation Method</h2>
+
+          <div class="payment-option-card">
+            <input type="radio" name="payment_method" value="call_confirm" class="payment-radio" checked>
+            <div class="payment-info">
+              <div class="payment-header">
+                <span class="payment-name"><i class="fa-solid fa-phone-volume" style="color:#10B981;"></i> Phone Call Confirmation &bull; Pay on Delivery</span>
+                <span style="background: #10B981; color: #FFFFFF; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">NO ADVANCE PAYMENT</span>
+              </div>
+              <div class="payment-desc">
+                <strong>How it works:</strong>
+                <ol style="margin-left: 1.25rem; margin-top: 0.35rem; display:flex; flex-direction:column; gap:0.25rem;">
+                  <li>You place this order with zero upfront payment.</li>
+                  <li>Our store team will call your mobile number within 15–30 minutes to verify your phone model, condition grade, and shipping address.</li>
+                  <li>Once you confirm the call, we dispatch your phone via Blue Dart Express.</li>
+                  <li>You pay via Cash or UPI upon doorstep package delivery!</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Review -->
+      <aside>
+        <div class="checkout-section" style="position: sticky; top: 100px;">
+          <h2 class="checkout-title"><i class="fa-solid fa-receipt" style="color: var(--primary);"></i> Order Summary</h2>
+
+          <div id="checkout-items-preview" style="max-height: 280px; overflow-y: auto; margin-bottom: 1.25rem;"></div>
+
+          <div class="summary-line">
+            <span>Items Subtotal:</span>
+            <strong id="ck-subtotal">₹0</strong>
+          </div>
+
+          <div class="summary-line" id="ck-discount-row" style="display:none; color:#16A34A;">
+            <span>Coupon Discount:</span>
+            <strong id="ck-discount">-₹0</strong>
+          </div>
+
+          <div class="summary-line">
+            <span>32-Point Diagnostics:</span>
+            <strong style="color:#10B981;">FREE</strong>
+          </div>
+
+          <div class="summary-line">
+            <span>6-Month Store Warranty:</span>
+            <strong style="color:#10B981;">INCLUDED</strong>
+          </div>
+
+          <div class="summary-line">
+            <span>Express Delivery:</span>
+            <strong style="color:#10B981;">FREE</strong>
+          </div>
+
+          <div class="summary-total-line">
+            <span>Amount on Delivery:</span>
+            <span style="font-size: 1.75rem; color: var(--primary);" id="ck-total">₹0</span>
+          </div>
+
+          <div style="margin-top: 1.75rem;">
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1.1rem; background: #10B981; border: none;" id="btn-submit-order">
+              <i class="fa-solid fa-phone-volume"></i> Place Order (We Will Call You)
+            </button>
+          </div>
+
+          <div style="margin-top: 1.25rem; font-size: 0.8125rem; color: var(--text-muted); text-align: center; line-height: 1.5; background: var(--bg-subtle); padding: 0.75rem; border-radius: var(--radius-md);">
+            <i class="fa-solid fa-shield-halved" style="color:#10B981;"></i> 100% Risk-Free. You only pay after you receive the phone.
+          </div>
+        </div>
+      </aside>
+    </form>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+
+  <script>
+    let checkoutItems = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const buyNowId = params.get('buyNowId');
+
+      if (buyNowId) {
+        try {
+          const res = await window.api.getProduct(buyNowId);
+          if (res.success && res.product) {
+            checkoutItems = [{
+              id: res.product.id,
+              name: res.product.name,
+              brand: res.product.brand,
+              price: res.product.selling_price,
+              ram: res.product.ram,
+              storage: res.product.storage,
+              image: res.product.images[0] || '',
+              quantity: 1
+            }];
+          }
+        } catch(e) {}
+      } else {
+        checkoutItems = AtoZ.AppState.cart;
+      }
+
+      if (!checkoutItems || checkoutItems.length === 0) {
+        window.location.href = '/cart.html';
+        return;
+      }
+
+      // Pre-fill user data if logged in
+      const user = AtoZ.AppState.user;
+      if (user) {
+        if (user.name) document.getElementById('cust-name').value = user.name;
+        if (user.email) document.getElementById('cust-email').value = user.email;
+        if (user.phone) document.getElementById('cust-phone').value = user.phone;
+        if (user.address) document.getElementById('cust-address').value = user.address;
+        if (user.city) document.getElementById('cust-city').value = user.city;
+        if (user.state) document.getElementById('cust-state').value = user.state;
+        if (user.pincode) document.getElementById('cust-pincode').value = user.pincode;
+      }
+
+      renderCheckoutSummary();
+    });
+
+    function renderCheckoutSummary() {
+      const container = document.getElementById('checkout-items-preview');
+      container.innerHTML = checkoutItems.map(item => `
+        <div class="review-item-mini">
+          <img src="${item.image || 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=100'}" class="review-item-img" alt="${item.name}">
+          <div style="flex:1;">
+            <div style="font-weight:700; color:var(--text-main);">${item.name}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">${item.ram} / ${item.storage} &bull; Qty: ${item.quantity}</div>
+          </div>
+          <div style="font-weight:800; color:var(--text-main);">${AtoZ.formatCurrency(item.price * item.quantity)}</div>
+        </div>
+      `).join('');
+
+      const subtotal = checkoutItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      document.getElementById('ck-subtotal').textContent = AtoZ.formatCurrency(subtotal);
+
+      let discount = 0;
+      const storedCoupon = localStorage.getItem('atoz_coupon');
+      if (storedCoupon) {
+        try {
+          const couponObj = JSON.parse(storedCoupon);
+          discount = couponObj.discountAmount || 0;
+          document.getElementById('ck-discount-row').style.display = 'flex';
+          document.getElementById('ck-discount').textContent = `-${AtoZ.formatCurrency(discount)}`;
+        } catch(e) {}
+      }
+
+      const total = Math.max(0, subtotal - discount);
+      document.getElementById('ck-total').textContent = AtoZ.formatCurrency(total);
+    }
+
+    document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const customer = {
+        name: document.getElementById('cust-name').value.trim(),
+        phone: document.getElementById('cust-phone').value.trim(),
+        email: document.getElementById('cust-email').value.trim(),
+        address: document.getElementById('cust-address').value.trim(),
+        city: document.getElementById('cust-city').value.trim(),
+        state: document.getElementById('cust-state').value.trim(),
+        pincode: document.getElementById('cust-pincode').value.trim()
+      };
+
+      let couponCode = '';
+      const storedCoupon = localStorage.getItem('atoz_coupon');
+      if (storedCoupon) {
+        try { couponCode = JSON.parse(storedCoupon).code || ''; } catch(e) {}
+      }
+
+      const payload = {
+        items: checkoutItems,
+        customer,
+        couponCode,
+        paymentMethod: 'call_confirm'
+      };
+
+      const submitBtn = document.getElementById('btn-submit-order');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting Order...';
+
+      try {
+        const res = await window.api.createOrder(payload);
+        if (res.success) {
+          AtoZ.clearCart();
+          localStorage.removeItem('atoz_coupon');
+          window.location.href = `/order-success.html?orderId=${res.orderId}&phone=${encodeURIComponent(customer.phone)}&name=${encodeURIComponent(customer.name)}`;
+        } else {
+          AtoZ.showToast(res.message, 'error');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fa-solid fa-phone-volume"></i> Place Order (We Will Call You)';
+        }
+      } catch (err) {
+        AtoZ.showToast('Failed to place order. Please check your connection.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-phone-volume"></i> Place Order (We Will Call You)';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 80" fill="none" width="100%" height="100%">
+  <defs>
+    <linearGradient id="azGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="50%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+    <linearGradient id="shieldGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+  </defs>
+
+  <!-- Phone & Refurbished Icon Badge -->
+  <g transform="translate(10, 8)">
+    <rect x="2" y="2" width="46" height="64" rx="10" fill="url(#shieldGradDark)" stroke="url(#azGradDark)" stroke-width="2.5" />
+    <line x1="18" y1="8" x2="32" y2="8" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" />
+    <circle cx="25" cy="34" r="16" stroke="#334155" stroke-width="2" stroke-dasharray="3 3" fill="none"/>
+    <path d="M17 38 L25 24 L33 38" stroke="url(#azGradDark)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M19 34 L31 34" stroke="url(#azGradDark)" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M20 40 L28 40 L22 47 L30 47" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <line x1="19" y1="60" x2="31" y2="60" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" />
+    <circle cx="43" cy="10" r="6" fill="#10B981" />
+    <path d="M40 10 L42 12 L46 8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Brand Typography -->
+  <g transform="translate(75, 20)">
+    <text x="0" y="28" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif" font-weight="900" font-size="28" fill="#F8FAFC" letter-spacing="-0.5">
+      A TO Z
+      <tspan fill="url(#azGradDark)"> MOBILES</tspan>
+    </text>
+    <rect x="0" y="35" width="168" height="15" rx="4" fill="#1E293B" />
+    <text x="6" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="8.5" fill="#60A5FA" letter-spacing="1">
+      CERTIFIED PRE-OWNED PHONES
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Policies, Warranty & Returns - A TO Z MOBILES</title>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .policy-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 3rem;
+      padding: 3rem 0 5rem;
+    }
+    .policy-nav {
+      position: sticky;
+      top: 100px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      height: fit-content;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .policy-nav a {
+      display: block;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+    .policy-nav a:hover, .policy-nav a.active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .policy-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .policy-card h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.75rem;
+    }
+    .policy-card p, .policy-card li {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .policy-card ul {
+      margin-left: 1.5rem;
+      margin-top: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 800px) {
+      .policy-layout { grid-template-columns: 1fr; }
+      .policy-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div><i class="fa-solid fa-shield-halved" style="color:#10B981;"></i> <span>100% Genuine Certified Refurbished Phones with 6-Month Store Warranty</span></div>
+      <div class="top-bar-links">
+        <a href="/account.html?tab=tracking"><i class="fa-solid fa-truck-fast"></i> Track Order</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/admin" target="_blank" style="color:#38BDF8;"><i class="fa-solid fa-lock"></i> Admin</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-row">
+        <a href="/" class="brand-logo"><img src="/images/logo.svg" alt="A TO Z MOBILES Logo"></a>
+        <div class="header-search">
+          <form id="header-search-form" class="search-wrapper">
+            <input type="text" id="header-search-input" class="search-input" placeholder="Search..." autocomplete="off">
+            <button type="submit" class="search-btn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </form>
+          <div id="search-dropdown" class="search-dropdown"></div>
+        </div>
+        <div class="nav-actions">
+          <a href="/cart.html" class="action-pill" title="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="cart-count-badge badge-count" style="display: none;">0</span></a>
+          <a href="/account.html" class="action-pill" title="Account"><i class="fa-regular fa-user"></i><span class="user-account-label">Account</span></a>
+        </div>
+      </div>
+    </div>
+    <nav class="sub-nav">
+      <div class="container sub-nav-row">
+        <ul class="nav-links">
+          <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="/shop.html"><i class="fa-solid fa-mobile-screen"></i> All Mobile Phones</a></li>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/policy.html" class="active">Store Policies</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="policy-layout">
+      <!-- Policy Menu -->
+      <aside>
+        <ul class="policy-nav">
+          <li><a href="#warranty" class="active">6-Month Warranty</a></li>
+          <li><a href="#replacement">7-Day Replacement</a></li>
+          <li><a href="#refund">Refunds & Cancellation</a></li>
+          <li><a href="#shipping">Shipping & Delivery</a></li>
+          <li><a href="#grading">Refurbished Grading</a></li>
+          <li><a href="#privacy">Privacy & Security</a></li>
+          <li><a href="#terms">Terms & Conditions</a></li>
+        </ul>
+      </aside>
+
+      <!-- Content -->
+      <div>
+        <!-- 1. Warranty Policy -->
+        <section id="warranty" class="policy-card">
+          <h2><i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i> 6-Month Comprehensive Store Warranty</h2>
+          <p>
+            At <strong>A TO Z MOBILES</strong>, every certified pre-owned smartphone includes an official 6-Month Store Warranty covering both hardware components and manufacturing functional defects.
+          </p>
+          <ul>
+            <li><strong>Display & Touchscreen:</strong> Covered for touch responsiveness failure and genuine display panel malfunction.</li>
+            <li><strong>Motherboard & Chipset:</strong> Covered for spontaneous restarts, unexpected freezing, or charging circuit issues.</li>
+            <li><strong>Camera Sensors & OIS:</strong> Covered for autofocus failure, lens blur, or sensor defects.</li>
+            <li><strong>Battery Performance:</strong> Guaranteed to retain certified health capacity under normal usage during the warranty window.</li>
+          </ul>
+          <p>
+            <strong>Warranty Exclusions:</strong> Accidental physical drops, liquid spillage, third-party unauthorized disassembly or unauthorized firmware rooting void the warranty.
+          </p>
+        </section>
+
+        <!-- 2. Replacement Policy -->
+        <section id="replacement" class="policy-card">
+          <h2><i class="fa-solid fa-rotate-left" style="color: #10B981;"></i> 7-Day Hassle-Free Replacement Policy</h2>
+          <p>
+            We offer an unconditional 7-Day replacement window starting from the day of confirmed delivery. If you encounter any technical glitch or if the device does not match the inspected grade, we arrange a free doorstep reverse pickup and ship a replacement or issue a full refund.
+          </p>
+          <ul>
+            <li>Device must be returned with all original accessories provided (adapter, cable, warranty card, and box).</li>
+            <li>All personal cloud accounts (Apple iCloud, Google Account, Samsung Account) must be signed out and device reset.</li>
+            <li>Physical IMEI matching our database dispatch logs must be intact.</li>
+          </ul>
+        </section>
+
+        <!-- 3. Refunds & Cancellation -->
+        <section id="refund" class="policy-card">
+          <h2><i class="fa-solid fa-indian-rupee-sign" style="color: #F59E0B;"></i> Return, Refund & Cancellation Policy</h2>
+          <p>
+            <strong>Order Cancellation:</strong> You can cancel any order prior to courier dispatch by contacting support via WhatsApp (+91 98765 43210) or email. Pre-paid Razorpay payments will be refunded in full.
+          </p>
+          <p>
+            <strong>Refund Processing:</strong> Once the returned phone passes reverse inspection at our Chennai hub, refunds are credited back to the original source (Google Pay, PhonePe, Paytm, or Credit/Debit Card) within 3 to 5 business days.
+          </p>
+        </section>
+
+        <!-- 4. Shipping & Delivery -->
+        <section id="shipping" class="policy-card">
+          <h2><i class="fa-solid fa-truck-fast" style="color: var(--primary);"></i> Express Insured Delivery Across India</h2>
+          <p>
+            We partner with <strong>Blue Dart Express</strong> and <strong>Delhivery</strong> for insured, air-express deliveries across all serviceable PIN codes in India.
+          </p>
+          <ul>
+            <li><strong>Shipping Fee:</strong> 100% FREE on all smartphone orders.</li>
+            <li><strong>Delivery Timeline:</strong> Metro cities (Chennai, Bengaluru, Mumbai, Delhi, Hyderabad) in 2 to 3 days; other regions in 3 to 5 days.</li>
+            <li><strong>Tamper-Proof Box:</strong> Shipped in anti-shock, tamper-evident security packaging with live tracking AWB sent to your SMS and email.</li>
+          </ul>
+        </section>
+
+        <!-- 5. Privacy Policy -->
+        <section id="privacy" class="policy-card">
+          <h2><i class="fa-solid fa-user-shield" style="color: var(--primary);"></i> Privacy Policy & Data Security</h2>
+          <p>
+            Your privacy is of utmost importance. A TO Z MOBILES complies with Indian IT Act provisions. We <strong>never store or record credit or debit card details</strong> on our servers. All online transactions are processed through 256-bit SSL encrypted channels via RBI-authorized payment aggregators (Razorpay).
+          </p>
+        </section>
+
+        <!-- 6. Terms and Conditions -->
+        <section id="terms" class="policy-card">
+          <h2><i class="fa-solid fa-file-contract" style="color: var(--primary);"></i> Terms and Conditions</h2>
+          <p>
+            All phones sold on atozmobiles.in are pre-owned/refurbished goods legally acquired, thoroughly bench-tested, and verified against Indian legal stolen device registries. Specifications and battery health percentages represent benchmarked test results at time of grading.
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div>&copy; 2026 A TO Z MOBILES. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Certified Refurbished Mobiles - A TO Z MOBILES</title>
+  <meta name="description" content="Browse second-hand and certified refurbished mobile phones from Apple, Samsung, OnePlus, Redmi, Vivo, Oppo. 100% quality tested with 6-month warranty.">
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style>
+    /* Shop Layout Specifics */
+    .shop-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0 4rem;
+    }
+    
+    .filter-sidebar {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      height: fit-content;
+      position: sticky;
+      top: 90px;
+    }
+
+    .filter-group {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .filter-group:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .filter-title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .filter-checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .filter-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .filter-checkbox-item input[type="checkbox"],
+    .filter-checkbox-item input[type="radio"] {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .filter-checkbox-item:hover {
+      color: var(--text-main);
+    }
+
+    .shop-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.25rem;
+    }
+    .shop-results-count {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+    .shop-results-count strong {
+      color: var(--text-main);
+    }
+    .sort-select {
+      border: 1px solid var(--border-color);
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      color: var(--text-main);
+      background: #FFFFFF;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn-clear-filters {
+      width: 100%;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      margin-top: 0.5rem;
+      transition: all var(--transition-fast);
+    }
+    .btn-clear-filters:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* Mobile filter drawer button */
+    .btn-mobile-filter {
+      display: none;
+      background: var(--primary);
+      color: #FFFFFF;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .shop-layout {
+        grid-template-columns: 1fr;
+      }
+      .filter-sidebar {
+        display: none;
+      }
+      .filter-sidebar.open-mobile {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        overflow-y: auto;
+        border-radius: 0;
+      }
+      .btn-mobile-filter {
+        display: inline-flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div>
+        <i class="fa-solid fa-bolt" style="color: #F59E0B;"></i>
+        <span>Certified Refurbished Smart Phones with 6-Month Store Warranty & 7-Day Free Replacement</span>
+      </div>
+      <div class="top-bar-links">
+        <a href="/account.html?tab=tracking"><i class="fa-solid fa-truck-fast"></i> Track Order</a>
+        <a href="/contact.html"><i class="fa-solid fa-headset"></i> Support</a>
+        <a href="/admin" target="_blank" style="color: #38BDF8;"><i class="fa-solid fa-lock"></i> Admin</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-row">
+        <a href="/" class="brand-logo">
+          <img src="/images/logo.svg" alt="A TO Z MOBILES Logo">
+        </a>
+
+        <div class="header-search">
+          <form id="header-search-form" class="search-wrapper">
+            <input type="text" id="header-search-input" class="search-input" placeholder="Search by brand or model..." autocomplete="off">
+            <button type="submit" class="search-btn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </form>
+          <div id="search-dropdown" class="search-dropdown"></div>
+        </div>
+
+        <div class="nav-actions">
+          <a href="#" onclick="AtoZ.openWhatsApp(); return false;" class="badge-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> <span>WhatsApp Help</span>
+          </a>
+          <a href="/account.html?tab=wishlist" class="action-pill" title="Wishlist">
+            <i class="fa-regular fa-heart"></i>
+            <span class="wishlist-count-badge badge-count" style="display: none;">0</span>
+          </a>
+          <a href="/cart.html" class="action-pill" title="Cart">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="cart-count-badge badge-count" style="display: none;">0</span>
+          </a>
+          <a href="/account.html" class="action-pill" title="Account">
+            <i class="fa-regular fa-user"></i>
+            <span class="user-account-label">Account</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sub-nav">
+      <div class="container sub-nav-row">
+        <ul class="nav-links">
+          <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="/shop.html" class="active"><i class="fa-solid fa-mobile-screen"></i> All Mobile Phones</a></li>
+          <li><a href="/shop.html?brand=Apple"><i class="fa-brands fa-apple"></i> Apple iPhones</a></li>
+          <li><a href="/shop.html?brand=Samsung"><i class="fa-solid fa-mobile"></i> Samsung Galaxy</a></li>
+          <li><a href="/shop.html?brand=OnePlus"><i class="fa-solid fa-bolt"></i> OnePlus</a></li>
+          <li><a href="/shop.html?brand=Redmi"><i class="fa-solid fa-mobile-screen-button"></i> Redmi / Xiaomi</a></li>
+          <li><a href="/shop.html?max_price=15000" class="highlight"><i class="fa-solid fa-tag"></i> Under ₹15,000</a></li>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="shop-layout">
+      <!-- Filter Sidebar -->
+      <aside class="filter-sidebar" id="filter-sidebar">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+          <h3 style="font-size: 1.125rem; font-weight: 800;"><i class="fa-solid fa-sliders"></i> Filter Phones</h3>
+          <button id="close-mobile-filter" style="display:none; font-size: 1.25rem;">&times;</button>
+        </div>
+
+        <!-- Brands Filter -->
+        <div class="filter-group">
+          <div class="filter-title"><span>Brand</span></div>
+          <div class="filter-checkbox-list" id="brand-filters">
+            <label class="filter-checkbox-item"><input type="checkbox" name="brand" value="Apple"> Apple</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="brand" value="Samsung"> Samsung</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="brand" value="OnePlus"> OnePlus</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="brand" value="Redmi"> Redmi / Xiaomi</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="brand" value="Vivo"> Vivo</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="brand" value="Oppo"> Oppo</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="brand" value="Realme"> Realme</label>
+          </div>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="filter-group">
+          <div class="filter-title"><span>Price Budget</span></div>
+          <div class="filter-checkbox-list">
+            <label class="filter-checkbox-item"><input type="radio" name="price_range" value="all" checked> All Budgets</label>
+            <label class="filter-checkbox-item"><input type="radio" name="price_range" value="0-15000"> Under ₹15,000</label>
+            <label class="filter-checkbox-item"><input type="radio" name="price_range" value="15000-30000"> ₹15,000 - ₹30,000</label>
+            <label class="filter-checkbox-item"><input type="radio" name="price_range" value="30000-50000"> ₹30,000 - ₹50,000</label>
+            <label class="filter-checkbox-item"><input type="radio" name="price_range" value="50000-150000"> Flagships Above ₹50,000</label>
+          </div>
+        </div>
+
+        <!-- Condition Grade Filter -->
+        <div class="filter-group">
+          <div class="filter-title"><span>Condition Grade</span></div>
+          <div class="filter-checkbox-list">
+            <label class="filter-checkbox-item"><input type="radio" name="grade" value="" checked> All Grades</label>
+            <label class="filter-checkbox-item"><input type="radio" name="grade" value="Superb"> Superb (Like New)</label>
+            <label class="filter-checkbox-item"><input type="radio" name="grade" value="Good"> Good Condition</label>
+          </div>
+        </div>
+
+        <!-- Battery Health Filter -->
+        <div class="filter-group">
+          <div class="filter-title"><span>Battery Health</span></div>
+          <div class="filter-checkbox-list">
+            <label class="filter-checkbox-item"><input type="radio" name="min_battery" value="" checked> Any Battery Health</label>
+            <label class="filter-checkbox-item"><input type="radio" name="min_battery" value="95"> 95%+ Pristine Battery</label>
+            <label class="filter-checkbox-item"><input type="radio" name="min_battery" value="90"> 90%+ High Battery Health</label>
+            <label class="filter-checkbox-item"><input type="radio" name="min_battery" value="85"> 85%+ Tested Original</label>
+          </div>
+        </div>
+
+        <!-- Storage Filter -->
+        <div class="filter-group">
+          <div class="filter-title"><span>Internal Storage</span></div>
+          <div class="filter-checkbox-list">
+            <label class="filter-checkbox-item"><input type="checkbox" name="storage" value="64 GB"> 64 GB</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="storage" value="128 GB"> 128 GB</label>
+            <label class="filter-checkbox-item"><input type="checkbox" name="storage" value="256 GB"> 256 GB</label>
+          </div>
+        </div>
+
+        <!-- Clear Button -->
+        <button id="btn-clear-all" class="btn-clear-filters">
+          <i class="fa-solid fa-arrows-rotate"></i> Reset All Filters
+        </button>
+      </aside>
+
+      <!-- Products Content Area -->
+      <section>
+        <div class="shop-header-bar">
+          <div class="shop-results-count">
+            Showing <strong id="products-count-label">0</strong> certified refurbished phones
+            <span id="active-search-label" style="display:none; color: var(--primary); font-weight:600;"></span>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <button class="btn-mobile-filter" id="btn-open-mobile-filter">
+              <i class="fa-solid fa-sliders"></i> Filter
+            </button>
+
+            <select id="sort-select" class="sort-select">
+              <option value="newest">Sort by: Newest Arrivals</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="discount">Highest Discount %</option>
+              <option value="rating">Top Customer Rated</option>
+              <option value="battery">Highest Battery Health</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Products Listing Grid -->
+        <div class="products-grid" id="shop-products-grid">
+          <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+            <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
+            <p style="margin-top: 0.5rem; color: var(--text-muted);">Loading certified refurbished phones...</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="/images/logo-dark.svg" alt="A TO Z MOBILES" class="footer-logo">
+        <p class="footer-desc">
+          India's trusted refurbished mobile platform. 32-point tested, 6-month store warranty, fast doorstep insured shipping.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Brands</h4>
+        <ul class="footer-links">
+          <li><a href="/shop.html?brand=Apple">Apple iPhones</a></li>
+          <li><a href="/shop.html?brand=Samsung">Samsung Galaxy</a></li>
+          <li><a href="/shop.html?brand=OnePlus">OnePlus</a></li>
+          <li><a href="/shop.html?brand=Redmi">Redmi Xiaomi</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Support</h4>
+        <ul class="footer-links">
+          <li><a href="/account.html?tab=tracking">Track Order</a></li>
+          <li><a href="/policy.html">Warranty Policy</a></li>
+          <li><a href="/contact.html">Store Location</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/policy.html">Replacement Policy</a></li>
+          <li><a href="/admin">Admin Panel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Store</h4>
+        <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>Chennai - 600040</span></div>
+        <div class="footer-contact-item"><i class="fa-solid fa-phone"></i><span>+91 98765 43210</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <div>&copy; 2026 A TO Z MOBILES. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" id="floating-whatsapp" class="floating-whatsapp" title="WhatsApp Support"><i class="fa-brands fa-whatsapp"></i></a>
+
+  <!-- JavaScript -->
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+
+  <script>
+    // Shop Page Filter & Sort Controller
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterState = {
+      search: urlParams.get('search') || '',
+      brand: urlParams.get('brand') || '',
+      min_price: urlParams.get('min_price') || '',
+      max_price: urlParams.get('max_price') || '',
+      grade: urlParams.get('grade') || '',
+      min_battery: urlParams.get('min_battery') || '',
+      storage: urlParams.get('storage') || '',
+      sort: urlParams.get('sort') || 'newest',
+      featured: urlParams.get('featured') || '',
+      latest: urlParams.get('latest') || ''
+    };
+
+    // Pre-select filters based on URL
+    if (filterState.brand) {
+      const brands = filterState.brand.split(',');
+      brands.forEach(b => {
+        const checkbox = document.querySelector(`input[name="brand"][value="${b}"]`);
+        if (checkbox) checkbox.checked = true;
+      });
+    }
+
+    if (filterState.max_price && !filterState.min_price) {
+      const radio = document.querySelector(`input[name="price_range"][value="0-${filterState.max_price}"]`);
+      if (radio) radio.checked = true;
+    }
+
+    if (filterState.search) {
+      const searchInput = document.getElementById('header-search-input');
+      if (searchInput) searchInput.value = filterState.search;
+      const searchLabel = document.getElementById('active-search-label');
+      if (searchLabel) {
+        searchLabel.style.display = 'inline';
+        searchLabel.textContent = `for "${filterState.search}"`;
+      }
+    }
+
+    async function loadShopProducts() {
+      const container = document.getElementById('shop-products-grid');
+      container.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
+          <p style="margin-top: 0.5rem; color: var(--text-muted);">Fetching matching refurbished phones...</p>
+        </div>
+      `;
+
+      try {
+        const res = await window.api.getProducts(filterState);
+        const countLabel = document.getElementById('products-count-label');
+        if (countLabel) countLabel.textContent = res.total || 0;
+
+        if (res.success && res.products.length > 0) {
+          container.innerHTML = res.products.map(p => {
+            const img = p.images[0] || 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500';
+            const inWishlist = AtoZ.isInWishlist(p.id);
+            return `
+              <div class="product-card">
+                <div class="card-badges">
+                  <span class="badge-grade"><i class="fa-solid fa-shield-halved"></i> ${p.grade.split(' ')[0]}</span>
+                  ${p.discount_percent > 0 ? `<span class="badge-discount">${p.discount_percent}% OFF</span>` : ''}
+                </div>
+
+                <button class="btn-wishlist ${inWishlist ? 'active' : ''}" onclick="toggleWishlistItem(event, ${p.id})" title="Wishlist">
+                  <i class="fa-${inWishlist ? 'solid' : 'regular'} fa-heart"></i>
+                </button>
+
+                <a href="/product.html?id=${p.id}" class="card-media">
+                  <img src="${img}" alt="${p.name}" class="card-img" loading="lazy">
+                </a>
+
+                <div class="card-body">
+                  <div class="card-brand">${p.brand}</div>
+                  <a href="/product.html?id=${p.id}" class="card-title" title="${p.name}">${p.name}</a>
+
+                  <div class="card-condition-row">
+                    <span class="pill-battery"><i class="fa-solid fa-battery-three-quarters"></i> ${p.battery_health}% Battery</span>
+                    <span class="pill-spec">${p.ram} / ${p.storage}</span>
+                  </div>
+
+                  <div class="card-rating">
+                    <span class="rating-stars"><i class="fa-solid fa-star"></i></span>
+                    <span style="font-weight: 700;">${p.rating}</span>
+                    <span class="rating-count">(${p.reviews_count})</span>
+                  </div>
+
+                  <div class="card-price-box">
+                    <span class="price-current">${AtoZ.formatCurrency(p.selling_price)}</span>
+                    <span class="price-original">${AtoZ.formatCurrency(p.original_price)}</span>
+                    <span class="price-save">Save ${AtoZ.formatCurrency(p.original_price - p.selling_price)}</span>
+                  </div>
+
+                  <div class="card-actions">
+                    <button class="btn-cart" onclick="addSingleToCart(event, ${p.id})">
+                      <i class="fa-solid fa-bag-shopping"></i> Add to Cart
+                    </button>
+                    <a href="/checkout.html?buyNowId=${p.id}" class="btn-buy">
+                      Buy Now
+                    </a>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 4rem 1rem; background: #FFFFFF; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+              <i class="fa-solid fa-mobile-screen-button" style="font-size: 3rem; color: #CBD5E1; margin-bottom: 1rem;"></i>
+              <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">No refurbished phones match your filters</h3>
+              <p style="color: var(--text-muted); font-size: 0.9375rem; margin-bottom: 1.5rem;">Try clearing selected brands, expanding price budgets, or searching for another model.</p>
+              <button onclick="resetFilters()" class="btn btn-primary"><i class="fa-solid fa-arrows-rotate"></i> Reset All Filters</button>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error('Error loading shop products:', err);
+      }
+    }
+
+    // Attach Filter Event Listeners
+    document.querySelectorAll('input[name="brand"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const checked = Array.from(document.querySelectorAll('input[name="brand"]:checked')).map(c => c.value);
+        filterState.brand = checked.join(',');
+        loadShopProducts();
+      });
+    });
+
+    document.querySelectorAll('input[name="price_range"]').forEach(rb => {
+      rb.addEventListener('change', () => {
+        const val = rb.value;
+        if (val === 'all') {
+          filterState.min_price = '';
+          filterState.max_price = '';
+        } else {
+          const [min, max] = val.split('-');
+          filterState.min_price = min;
+          filterState.max_price = max;
+        }
+        loadShopProducts();
+      });
+    });
+
+    document.querySelectorAll('input[name="grade"]').forEach(rb => {
+      rb.addEventListener('change', () => {
+        filterState.grade = rb.value;
+        loadShopProducts();
+      });
+    });
+
+    document.querySelectorAll('input[name="min_battery"]').forEach(rb => {
+      rb.addEventListener('change', () => {
+        filterState.min_battery = rb.value;
+        loadShopProducts();
+      });
+    });
+
+    document.querySelectorAll('input[name="storage"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const checked = Array.from(document.querySelectorAll('input[name="storage"]:checked')).map(c => c.value);
+        filterState.storage = checked.join(',');
+        loadShopProducts();
+      });
+    });
+
+    const sortSelect = document.getElementById('sort-select');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', () => {
+        filterState.sort = sortSelect.value;
+        loadShopProducts();
+      });
+    }
+
+    function resetFilters() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+      const allPrice = document.querySelector('input[name="price_range"][value="all"]');
+      if (allPrice) allPrice.checked = true;
+      const allGrade = document.querySelector('input[name="grade"][value=""]');
+      if (allGrade) allGrade.checked = true;
+      const allBattery = document.querySelector('input[name="min_battery"][value=""]');
+      if (allBattery) allBattery.checked = true;
+      
+      filterState.search = '';
+      filterState.brand = '';
+      filterState.min_price = '';
+      filterState.max_price = '';
+      filterState.grade = '';
+      filterState.min_battery = '';
+      filterState.storage = '';
+      filterState.featured = '';
+      filterState.latest = '';
+
+      const searchInput = document.getElementById('header-search-input');
+      if (searchInput) searchInput.value = '';
+      const searchLabel = document.getElementById('active-search-label');
+      if (searchLabel) searchLabel.style.display = 'none';
+
+      loadShopProducts();
+    }
+
+    document.getElementById('btn-clear-all').addEventListener('click', resetFilters);
+
+    // Mobile filter drawer toggles
+    const mobileBtn = document.getElementById('btn-open-mobile-filter');
+    const sidebar = document.getElementById('filter-sidebar');
+    const closeBtn = document.getElementById('close-mobile-filter');
+    if (mobileBtn && sidebar) {
+      mobileBtn.addEventListener('click', () => {
+        sidebar.classList.add('open-mobile');
+        closeBtn.style.display = 'block';
+      });
+    }
+    if (closeBtn && sidebar) {
+      closeBtn.addEventListener('click', () => {
+        sidebar.classList.remove('open-mobile');
+        closeBtn.style.display = 'none';
+      });
+    }
+
+    async function addSingleToCart(e, productId) {
+      e.preventDefault();
+      try {
+        const res = await window.api.getProduct(productId);
+        if (res.success && res.product) {
+          AtoZ.addToCart(res.product, 1);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function toggleWishlistItem(e, productId) {
+      e.preventDefault();
+      try {
+        const res = await window.api.getProduct(productId);
+        if (res.success && res.product) {
+          const btn = e.currentTarget;
+          const added = AtoZ.toggleWishlist(res.product);
+          if (added) {
+            btn.classList.add('active');
+            btn.innerHTML = '<i class="fa-solid fa-heart"></i>';
+          } else {
+            btn.classList.remove('active');
+            btn.innerHTML = '<i class="fa-regular fa-heart"></i>';
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadShopProducts);
+  </script>
+</body>
+</html>
