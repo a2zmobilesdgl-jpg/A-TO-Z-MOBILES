@@ -605,7 +605,7 @@
     const input = document.getElementById('quick-wa-input');
     const val = input.value.trim();
     if (!val) {
-      alert('Please enter your WhatsApp number (e.g. +91 9876543210)');
+      alert('Please enter your WhatsApp number (e.g. +91 8248948451)');
       return;
     }
 
@@ -636,7 +636,7 @@
       if (!data.success) return;
       const s = data.settings || {};
 
-      const currentWa = s.whatsapp || '+919876543210';
+      const currentWa = s.whatsapp || '+918248948451';
       if (document.getElementById('current-wa-badge')) {
         document.getElementById('current-wa-badge').textContent = currentWa;
       }
@@ -646,7 +646,7 @@
 
       if (document.getElementById('set-shop-name')) document.getElementById('set-shop-name').value = s.shop_name || 'A TO Z MOBILES';
       if (document.getElementById('set-whatsapp')) document.getElementById('set-whatsapp').value = currentWa;
-      if (document.getElementById('set-phone')) document.getElementById('set-phone').value = s.phone || '+91 98765 43210';
+      if (document.getElementById('set-phone')) document.getElementById('set-phone').value = s.phone || '+91 82489 48451';
       if (document.getElementById('set-upi')) document.getElementById('set-upi').value = s.upi_id || 'atozmobiles@okaxis';
       if (document.getElementById('set-address')) document.getElementById('set-address').value = s.address || '';
     } catch(e) {}

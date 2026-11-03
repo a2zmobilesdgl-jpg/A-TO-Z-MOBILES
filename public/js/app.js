@@ -205,7 +205,7 @@
 
   // --- WHATSAPP LAUNCHER ---
   function openWhatsApp(productName = '', price = '') {
-    const phone = AppState.config?.whatsapp || '+919876543210';
+    const phone = AppState.config?.whatsapp || '+918248948451';
     let text = `Hi A TO Z MOBILES! I am browsing your refurbished store.`;
     if (productName) {
       text = `Hi A TO Z MOBILES! I am interested in purchasing "${productName}" priced at ${price}. Please let me know the condition and availability!`;
@@ -292,7 +292,7 @@
     const isShop = curPath.includes('shop');
     const isCart = curPath.includes('cart');
 
-    const rawPhone = (AppState.config && AppState.config.phone) ? AppState.config.phone : '+91 98765 43210';
+    const rawPhone = (AppState.config && AppState.config.phone) ? AppState.config.phone : '+91 82489 48451';
     const telLink = 'tel:' + rawPhone.replace(/[^0-9+]/g, '');
 
     nav.innerHTML = `
