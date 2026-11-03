@@ -83,8 +83,10 @@
     ['orders', 'overview', 'products', 'customers', 'coupons', 'settings'].forEach(t => {
       const sec = document.getElementById(`tab-${t}`);
       const btn = document.getElementById(`btn-adm-${t}`);
+      const qtab = document.getElementById(`qtab-${t}`);
       if (sec) sec.style.display = (t === tab) ? 'block' : 'none';
       if (btn) btn.classList.toggle('active', t === tab);
+      if (qtab) qtab.classList.toggle('active', t === tab);
     });
 
     const titles = {
@@ -117,9 +119,12 @@
       if (document.getElementById('stat-total-sales-orders')) document.getElementById('stat-total-sales-orders').textContent = salesStr;
       if (document.getElementById('stat-orders')) document.getElementById('stat-orders').textContent = data.stats.totalOrders;
       if (document.getElementById('stat-products')) document.getElementById('stat-products').textContent = `${data.stats.totalProducts} (${data.stats.totalStock} units)`;
+      if (document.getElementById('side-stock-badge')) document.getElementById('side-stock-badge').textContent = data.stats.totalProducts;
       if (document.getElementById('stat-customers')) document.getElementById('stat-customers').textContent = data.stats.totalCustomers;
       if (document.getElementById('stat-pending-calls')) document.getElementById('stat-pending-calls').textContent = data.stats.pendingCalls;
       if (document.getElementById('pill-needs-call')) document.getElementById('pill-needs-call').textContent = data.stats.pendingCalls;
+      if (document.getElementById('side-pending-badge')) document.getElementById('side-pending-badge').textContent = data.stats.pendingCalls;
+      if (document.getElementById('mobile-call-num')) document.getElementById('mobile-call-num').textContent = data.stats.pendingCalls;
 
       // Low Stock Table
       const lowTbody = document.getElementById('low-stock-tbody');

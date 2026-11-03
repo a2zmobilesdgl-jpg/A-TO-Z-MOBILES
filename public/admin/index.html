@@ -15,114 +15,294 @@
 
   <style>
     body.admin-body {
-      background-color: #0F172A;
+      background: radial-gradient(ellipse at 50% -10%, #172554 0%, #0A0F1D 60%, #05070D 100%) no-repeat fixed;
+      background-color: #070A12;
       color: #F8FAFC;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
     }
+
     .admin-wrapper {
       display: flex;
       min-height: 100vh;
+      position: relative;
     }
+
+    /* 3D Sidebar with Neatly Grouped Side Headings */
     .admin-sidebar {
-      width: 260px;
-      background: #0B0F19;
+      width: 280px;
+      background: rgba(11, 17, 30, 0.95);
       border-right: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(20px);
+      z-index: 100;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .admin-brand {
-      padding: 1.5rem;
+      padding: 1.5rem 1.25rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.2);
     }
-    .admin-nav {
-      padding: 1.25rem 0.75rem;
+    .admin-brand img {
+      height: 38px;
+      filter: drop-shadow(0 2px 8px rgba(0, 210, 255, 0.3));
+    }
+    .admin-status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: #34D399;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+    }
+    .admin-status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10B981;
+      animation: pulseGreen 2s infinite;
+    }
+    @keyframes pulseGreen {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Side Headings & Navigation Groups */
+    .admin-nav-container {
+      padding: 1rem 0.85rem;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 1.25rem;
       flex: 1;
+      overflow-y: auto;
     }
+
+    .admin-nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .admin-side-heading {
+      font-size: 0.6875rem;
+      font-weight: 800;
+      color: #38BDF8;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.35rem 0.85rem 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      opacity: 0.9;
+    }
+
     .admin-nav-item {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
+      justify-content: space-between;
+      padding: 0.7rem 0.95rem;
       border-radius: var(--radius-md);
       color: #94A3B8;
-      font-size: 0.9375rem;
-      font-weight: 600;
+      font-size: 0.875rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: all var(--transition-fast);
-      border: none;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
       background: transparent;
       width: 100%;
       text-align: left;
     }
-    .admin-nav-item:hover, .admin-nav-item.active {
-      background: rgba(37, 99, 235, 0.15);
-      color: #60A5FA;
+    .admin-nav-item .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .admin-nav-item .nav-item-left i {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+      transition: transform 0.15s ease;
+    }
+    .admin-nav-item:hover {
+      background: rgba(37, 99, 235, 0.12);
+      color: #FFFFFF;
+      border-color: rgba(56, 189, 248, 0.2);
+      transform: translateX(3px);
+    }
+    .admin-nav-item:hover .nav-item-left i {
+      transform: scale(1.15);
+    }
+    .admin-nav-item.active {
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.25) 0%, rgba(56, 189, 248, 0.12) 100%);
+      color: #38BDF8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-left: 3.5px solid #38BDF8;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
+    .admin-nav-badge {
+      font-size: 0.6875rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+      background: rgba(245, 158, 11, 0.2);
+      color: #F59E0B;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .admin-nav-badge.danger {
+      background: rgba(239, 68, 68, 0.25);
+      color: #EF4444;
+      border-color: #EF4444;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+    }
+    .admin-nav-badge.blue {
+      background: rgba(37, 99, 235, 0.25);
+      color: #60A5FA;
+      border-color: #60A5FA;
+    }
+
+    .admin-sidebar-footer {
+      padding: 1rem 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    /* Main Admin Surface */
     .admin-main {
       flex: 1;
-      padding: 2rem 2.5rem;
+      padding: 2rem 2.5rem 4rem;
       overflow-y: auto;
+      max-width: 1400px;
     }
+
+    /* Top Horizontal Quick Nav Bar (Neat 1-Tap Switching) */
+    .admin-quick-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
+      scrollbar-width: none;
+    }
+    .admin-quick-tabs::-webkit-scrollbar { display: none; }
+    .quick-tab-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94A3B8;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .quick-tab-pill:hover, .quick-tab-pill.active {
+      background: rgba(37, 99, 235, 0.2);
+      color: #38BDF8;
+      border-color: #38BDF8;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+    }
+
     .admin-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
-    /* Metric Cards */
+    /* 3D Metric Cards */
     .metric-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
+      gap: 1.35rem;
       margin-bottom: 2rem;
     }
     .metric-card {
-      background: #1E293B;
+      background: linear-gradient(160deg, rgba(26, 38, 64, 0.8) 0%, rgba(13, 20, 36, 0.95) 100%);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-lg);
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.65);
+      border-radius: var(--radius-xl);
       padding: 1.5rem;
       display: flex;
       align-items: center;
       gap: 1.25rem;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transition: all 0.25s ease;
+    }
+    .metric-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
     .metric-icon-box {
-      width: 52px;
-      height: 52px;
-      border-radius: var(--radius-md);
-      background: rgba(37, 99, 235, 0.2);
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(56, 189, 248, 0.25));
+      border: 1px solid rgba(56, 189, 248, 0.5);
       color: #38BDF8;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
     }
     .metric-val {
-      font-size: 1.75rem;
-      font-weight: 800;
+      font-size: 1.85rem;
+      font-weight: 900;
       color: #FFFFFF;
+      line-height: 1.1;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     }
     .metric-title {
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       color: #94A3B8;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
+      font-weight: 700;
+      margin-top: 0.3rem;
     }
 
-    /* Data Tables */
+    /* 3D Content Container Cards */
     .admin-card {
-      background: #1E293B;
+      background: linear-gradient(160deg, rgba(22, 33, 56, 0.85) 0%, rgba(13, 20, 36, 0.95) 100%);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.7);
       border-radius: var(--radius-xl);
       padding: 1.75rem;
       margin-bottom: 2rem;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      overflow-x: auto;
     }
+
+    /* 3D Data Tables */
     .admin-table {
       width: 100%;
       border-collapse: collapse;
@@ -131,94 +311,118 @@
     }
     .admin-table th {
       text-align: left;
-      padding: 0.75rem 1rem;
-      background: #0F172A;
+      padding: 0.85rem 1rem;
+      background: rgba(11, 16, 28, 0.9);
       color: #94A3B8;
-      font-weight: 700;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.75rem;
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.12);
+      white-space: nowrap;
     }
     .admin-table td {
-      padding: 0.85rem 1rem;
+      padding: 0.95rem 1rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       color: #E2E8F0;
       vertical-align: middle;
     }
     .admin-table tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(37, 99, 235, 0.06);
     }
 
-    /* Fast Action Buttons */
+    /* 3D Fast Action Buttons */
     .btn-call {
-      background: #10B981;
-      color: #FFFFFF;
-      font-weight: 700;
-      padding: 0.35rem 0.65rem;
-      border-radius: 4px;
+      background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+      color: #FFFFFF !important;
+      font-weight: 800;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
       font-size: 0.75rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      text-decoration: none;
+      gap: 0.35rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 3px 0 var(--success-dark), 0 4px 10px rgba(0,0,0,0.3);
+      transition: all 0.12s ease;
     }
-    .btn-call:hover { background: #059669; color: #FFFFFF; }
+    .btn-call:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 0 var(--success-dark), 0 6px 14px rgba(16, 185, 129, 0.4);
+    }
+    .btn-call:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--success-dark);
+    }
 
     .btn-wa {
-      background: #25D366;
-      color: #FFFFFF;
-      font-weight: 700;
-      padding: 0.35rem 0.65rem;
-      border-radius: 4px;
+      background: linear-gradient(180deg, #25D366 0%, #16A34A 100%);
+      color: #FFFFFF !important;
+      font-weight: 800;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
       font-size: 0.75rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      text-decoration: none;
+      gap: 0.35rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 3px 0 #15803D, 0 4px 10px rgba(0,0,0,0.3);
+      transition: all 0.12s ease;
     }
-    .btn-wa:hover { background: #1EBE5D; color: #FFFFFF; }
+    .btn-wa:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 0 #15803D, 0 6px 14px rgba(37, 211, 102, 0.4);
+    }
+    .btn-wa:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #15803D);
+    }
 
     .btn-action-confirm {
-      background: #2563EB;
+      background: linear-gradient(180deg, #3B82F6 0%, #1D4ED8 100%);
       color: #FFFFFF;
-      font-weight: 700;
-      padding: 0.35rem 0.65rem;
-      border-radius: 4px;
+      font-weight: 800;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
       font-size: 0.75rem;
-      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 3px 0 var(--primary-dark);
       cursor: pointer;
     }
-    .btn-action-confirm:hover { background: #1D4ED8; }
+    .btn-action-confirm:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--primary-dark); }
+    .btn-action-confirm:active { transform: translateY(2px); box-shadow: 0 0 0 var(--primary-dark); }
 
     .btn-action-dispatch {
-      background: #7C3AED;
+      background: linear-gradient(180deg, #8B5CF6 0%, #6D28D9 100%);
       color: #FFFFFF;
-      font-weight: 700;
-      padding: 0.35rem 0.65rem;
-      border-radius: 4px;
+      font-weight: 800;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
       font-size: 0.75rem;
-      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 3px 0 #5B21B6;
       cursor: pointer;
     }
-    .btn-action-dispatch:hover { background: #6D28D9; }
 
     .btn-action-paid {
-      background: #059669;
+      background: linear-gradient(180deg, #10B981 0%, #047857 100%);
       color: #FFFFFF;
-      font-weight: 700;
-      padding: 0.35rem 0.65rem;
-      border-radius: 4px;
+      font-weight: 800;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
       font-size: 0.75rem;
-      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 3px 0 #064E3B;
       cursor: pointer;
     }
-    .btn-action-paid:hover { background: #047857; }
 
     .btn-action-cancel {
-      background: rgba(239, 68, 68, 0.2);
+      background: rgba(239, 68, 68, 0.15);
       color: #F87171;
-      border: 1px solid #EF4444;
-      font-weight: 600;
-      padding: 0.35rem 0.65rem;
-      border-radius: 4px;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      font-weight: 700;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
       font-size: 0.75rem;
       cursor: pointer;
     }
@@ -226,25 +430,26 @@
 
     .status-pill {
       font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.25rem 0.65rem;
+      font-weight: 800;
+      padding: 0.3rem 0.7rem;
       border-radius: var(--radius-full);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       display: inline-block;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
-    .status-pill.awaiting { background: #FEF3C7; color: #B45309; }
-    .status-pill.confirmed { background: #DBEAFE; color: #1E40AF; }
-    .status-pill.dispatched { background: #EDE9FE; color: #6D28D9; }
-    .status-pill.delivered { background: #D1FAE5; color: #065F46; }
-    .status-pill.cancelled { background: #FEE2E2; color: #991B1B; }
+    .status-pill.awaiting { background: rgba(245, 158, 11, 0.2); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .status-pill.confirmed { background: rgba(59, 130, 246, 0.2); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .status-pill.dispatched { background: rgba(139, 92, 246, 0.2); color: #A78BFA; border: 1px solid rgba(139, 92, 246, 0.4); }
+    .status-pill.delivered { background: rgba(16, 185, 129, 0.2); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .status-pill.cancelled { background: rgba(239, 68, 68, 0.2); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.4); }
 
-    /* Modals */
+    /* Modals & Forms */
     .admin-modal-backdrop {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
       z-index: 1000;
       display: flex;
       align-items: center;
@@ -252,70 +457,154 @@
       padding: 1.5rem;
     }
     .admin-modal {
-      background: #1E293B;
+      background: linear-gradient(160deg, #162444 0%, #0E1626 100%);
       border: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: var(--radius-xl);
       max-width: 680px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      padding: 2rem;
-      box-shadow: var(--shadow-xl);
+      padding: 2.25rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.2);
       color: #FFFFFF;
     }
     .dark-input {
-      background: #0F172A !important;
+      background: rgba(8, 12, 22, 0.9) !important;
       border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
       color: #FFFFFF !important;
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.85rem;
+      font-size: 0.875rem;
+      width: 100%;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+      transition: all 0.15s ease;
+    }
+    .dark-input:focus {
+      border-color: #38BDF8 !important;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8), 0 0 14px rgba(56, 189, 248, 0.3) !important;
+      outline: none;
+    }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #CBD5E1;
+      margin-bottom: 0.4rem;
     }
 
     .order-filter-pills {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
     .order-filter-btn {
-      background: #0F172A;
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: #94A3B8;
-      padding: 0.4rem 0.85rem;
+      padding: 0.45rem 0.95rem;
       border-radius: var(--radius-full);
       font-size: 0.8125rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
+      transition: all 0.15s ease;
     }
     .order-filter-btn.active, .order-filter-btn:hover {
-      background: var(--primary);
+      background: linear-gradient(180deg, #3B82F6 0%, #1D4ED8 100%);
       color: #FFFFFF;
-      border-color: var(--primary);
+      border-color: #38BDF8;
+      box-shadow: 0 3px 0 var(--primary-dark), 0 4px 10px rgba(37, 99, 235, 0.3);
     }
 
-    @media (max-width: 900px) {
+    /* Mobile Admin Header Bar (Toggle Menu) */
+    .admin-mobile-topbar {
+      display: none;
+      background: rgba(11, 17, 30, 0.98);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.85rem 1.25rem;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 101;
+      backdrop-filter: blur(16px);
+    }
+    .admin-hamburger {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    @media (max-width: 960px) {
       .admin-wrapper { flex-direction: column; }
-      .admin-sidebar { width: 100%; }
-      .metric-grid { grid-template-columns: 1fr 1fr; }
+      .admin-mobile-topbar { display: flex; }
+      .admin-sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        width: 290px;
+        z-index: 9999;
+      }
+      .admin-sidebar.open {
+        transform: translateX(0);
+      }
+      .admin-sidebar-backdrop {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(6px);
+        z-index: 9998;
+      }
+      .admin-sidebar-backdrop.active {
+        display: block;
+      }
+      .metric-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .admin-main { padding: 1.25rem 1rem 3rem; }
+      .form-grid-2 { grid-template-columns: 1fr; gap: 0.75rem; }
     }
   </style>
 </head>
 <body class="admin-body">
 
+  <!-- Mobile Backdrop for Sidebar -->
+  <div id="admin-sidebar-backdrop" class="admin-sidebar-backdrop" onclick="toggleAdminSidebar(false)"></div>
+
   <!-- Admin Login Overlay -->
   <div id="admin-login-overlay" class="admin-modal-backdrop" style="display: flex;">
-    <div style="background: #1E293B; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--radius-xl); padding: 2.5rem; max-width: 440px; width: 100%; box-shadow: var(--shadow-xl);">
-      <div style="text-align: center; margin-bottom: 1.5rem;">
-        <img src="/images/logo-dark.svg" alt="A TO Z MOBILES" style="height: 48px; margin: 0 auto 0.75rem;">
-        <h2 style="font-size: 1.35rem; font-weight: 800; color: #FFFFFF;">Admin Portal Login</h2>
-        <p style="font-size: 0.8125rem; color: #94A3B8;">Phone Order Confirmation & Management</p>
+    <div style="background: linear-gradient(160deg, #162444 0%, #0E1626 100%); border: 1px solid rgba(255, 255, 255, 0.15); border-top: 1px solid rgba(255, 255, 255, 0.3); border-radius: var(--radius-xl); padding: 2.5rem; max-width: 440px; width: 100%; box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(56, 189, 248, 0.25);">
+      <div style="text-align: center; margin-bottom: 1.75rem;">
+        <img src="/images/logo-dark.svg" alt="A TO Z MOBILES" style="height: 48px; margin: 0 auto 0.85rem; filter: drop-shadow(0 4px 10px rgba(0,210,255,0.3));">
+        <h2 style="font-size: 1.45rem; font-weight: 900; color: #FFFFFF;">Admin Portal Login</h2>
+        <p style="font-size: 0.8125rem; color: #94A3B8;">Phone Order Confirmation & Store Control</p>
       </div>
 
       <form id="admin-login-form">
         <div style="margin-bottom: 1.25rem;">
-          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem; color:#E2E8F0;">Admin Email</label>
+          <label class="form-label">Admin Email</label>
           <input type="email" id="ad-email" required class="form-input dark-input" value="admin@atozmobiles.in" placeholder="admin@atozmobiles.in">
         </div>
-        <div style="margin-bottom: 1.5rem;">
-          <label style="display:block; font-size:0.8125rem; font-weight:700; margin-bottom:0.35rem; color:#E2E8F0;">Password</label>
+        <div style="margin-bottom: 1.75rem;">
+          <label class="form-label">Password</label>
           <input type="password" id="ad-pass" required class="form-input dark-input" value="admin123" placeholder="••••••••">
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem; font-size: 1rem; padding: 0.85rem;">
@@ -328,54 +617,169 @@
     </div>
   </div>
 
+  <!-- Mobile Top Header Bar -->
+  <div class="admin-mobile-topbar" id="admin-mobile-topbar">
+    <button class="admin-hamburger" onclick="toggleAdminSidebar(true)" aria-label="Open Navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <a href="/" target="_blank"><img src="/images/logo-dark.svg" alt="A TO Z MOBILES" style="height: 32px;"></a>
+    <div style="display:flex; align-items:center; gap:0.4rem;">
+      <span class="admin-nav-badge danger" id="mobile-call-badge" onclick="switchAdminTab('orders')" style="cursor:pointer;">
+        📞 <span id="mobile-call-num">0</span>
+      </span>
+    </div>
+  </div>
+
   <div class="admin-wrapper" id="admin-app" style="display: none;">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
+    <!-- 3D Sidebar with Neatly Grouped Side Headings -->
+    <aside class="admin-sidebar" id="admin-sidebar">
       <div class="admin-brand">
-        <a href="/" target="_blank"><img src="/images/logo-dark.svg" alt="A TO Z MOBILES" style="height: 40px;"></a>
+        <a href="/" target="_blank"><img src="/images/logo-dark.svg" alt="A TO Z MOBILES"></a>
+        <div class="admin-status-indicator">
+          <span class="admin-status-dot"></span> Online
+        </div>
       </div>
 
-      <nav class="admin-nav">
-        <button class="admin-nav-item active" onclick="switchAdminTab('orders')" id="btn-adm-orders">
-          <i class="fa-solid fa-phone-volume" style="color: #10B981;"></i> Call & Confirm Orders
-        </button>
-        <button class="admin-nav-item" onclick="switchAdminTab('overview')" id="btn-adm-overview">
-          <i class="fa-solid fa-chart-pie"></i> Sales & Analytics
-        </button>
-        <button class="admin-nav-item" onclick="switchAdminTab('products')" id="btn-adm-products">
-          <i class="fa-solid fa-mobile-screen"></i> Manage Products
-        </button>
-        <button class="admin-nav-item" onclick="switchAdminTab('customers')" id="btn-adm-customers">
-          <i class="fa-solid fa-users"></i> Customers
-        </button>
-        <button class="admin-nav-item" onclick="switchAdminTab('coupons')" id="btn-adm-coupons">
-          <i class="fa-solid fa-tag"></i> Coupons
-        </button>
-        <button class="admin-nav-item" onclick="switchAdminTab('settings')" id="btn-adm-settings">
-          <i class="fa-solid fa-gear"></i> Store Settings
-        </button>
-
-        <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
-          <a href="/" target="_blank" class="admin-nav-item" style="color: #38BDF8;">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Live Storefront
+      <nav class="admin-nav-container">
+        
+        <!-- SIDE HEADING 1: ORDERS & CALL DESK -->
+        <div class="admin-nav-group">
+          <div class="admin-side-heading">
+            <i class="fa-solid fa-bolt"></i> ORDERS & CALL DESK
+          </div>
+          <button class="admin-nav-item active" onclick="switchAdminTab('orders'); closeMobileSidebar();" id="btn-adm-orders">
+            <span class="nav-item-left">
+              <i class="fa-solid fa-phone-volume" style="color: #10B981;"></i>
+              <span>Call & Confirm Orders</span>
+            </span>
+            <span class="admin-nav-badge danger" id="side-pending-badge">0</span>
+          </button>
+          <a href="https://wa.me/918248948451" target="_blank" class="admin-nav-item">
+            <span class="nav-item-left">
+              <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
+              <span>WhatsApp Inquiries</span>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem; color: #64748B;"></i>
           </a>
-          <button onclick="adminLogout()" class="admin-nav-item" style="color: #F87171;">
-            <i class="fa-solid fa-power-off"></i> Logout
+        </div>
+
+        <!-- SIDE HEADING 2: INVENTORY & MOBILES -->
+        <div class="admin-nav-group">
+          <div class="admin-side-heading">
+            <i class="fa-solid fa-mobile-screen"></i> INVENTORY & MOBILES
+          </div>
+          <button class="admin-nav-item" onclick="switchAdminTab('products'); closeMobileSidebar();" id="btn-adm-products">
+            <span class="nav-item-left">
+              <i class="fa-solid fa-boxes-stacked" style="color: #38BDF8;"></i>
+              <span>Manage All Phones</span>
+            </span>
+            <span class="admin-nav-badge blue" id="side-stock-badge">0</span>
+          </button>
+          <button class="admin-nav-item" onclick="openProductModal(); closeMobileSidebar();" style="color: #34D399;">
+            <span class="nav-item-left">
+              <i class="fa-solid fa-circle-plus" style="color: #34D399;"></i>
+              <span>Add Refurbished Phone</span>
+            </span>
+            <span style="font-size: 0.65rem; background: rgba(16,185,129,0.2); padding: 2px 6px; border-radius: 4px; font-weight:800;">32-PT</span>
           </button>
         </div>
+
+        <!-- SIDE HEADING 3: SALES & REVENUE -->
+        <div class="admin-nav-group">
+          <div class="admin-side-heading">
+            <i class="fa-solid fa-chart-line"></i> SALES & PERFORMANCE
+          </div>
+          <button class="admin-nav-item" onclick="switchAdminTab('overview'); closeMobileSidebar();" id="btn-adm-overview">
+            <span class="nav-item-left">
+              <i class="fa-solid fa-chart-pie" style="color: #818CF8;"></i>
+              <span>Sales & Analytics</span>
+            </span>
+          </button>
+          <button class="admin-nav-item" onclick="switchAdminTab('customers'); closeMobileSidebar();" id="btn-adm-customers">
+            <span class="nav-item-left">
+              <i class="fa-solid fa-users" style="color: #F472B6;"></i>
+              <span>Customer Accounts</span>
+            </span>
+          </button>
+          <button class="admin-nav-item" onclick="switchAdminTab('coupons'); closeMobileSidebar();" id="btn-adm-coupons">
+            <span class="nav-item-left">
+              <i class="fa-solid fa-tags" style="color: #FBBF24;"></i>
+              <span>Discount Coupons</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- SIDE HEADING 4: CONFIGURATION -->
+        <div class="admin-nav-group">
+          <div class="admin-side-heading">
+            <i class="fa-solid fa-gear"></i> STORE CONFIGURATION
+          </div>
+          <button class="admin-nav-item" onclick="switchAdminTab('settings'); closeMobileSidebar();" id="btn-adm-settings">
+            <span class="nav-item-left">
+              <i class="fa-solid fa-sliders" style="color: #38BDF8;"></i>
+              <span>Phone & WhatsApp Setup</span>
+            </span>
+          </button>
+          <button class="admin-nav-item" onclick="switchAdminTab('settings'); scrollToPassword(); closeMobileSidebar();">
+            <span class="nav-item-left">
+              <i class="fa-solid fa-shield-halved" style="color: #10B981;"></i>
+              <span>Admin Security & Password</span>
+            </span>
+          </button>
+        </div>
+
       </nav>
+
+      <!-- SIDEBAR FOOTER: SHORTCUTS -->
+      <div class="admin-sidebar-footer">
+        <a href="/" target="_blank" class="admin-nav-item" style="color: #38BDF8;">
+          <span class="nav-item-left">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>View Live Website</span>
+          </span>
+        </a>
+        <button onclick="adminLogout()" class="admin-nav-item" style="color: #F87171;">
+          <span class="nav-item-left">
+            <i class="fa-solid fa-power-off"></i>
+            <span>Admin Logout</span>
+          </span>
+        </button>
+      </div>
     </aside>
 
     <!-- Main Content -->
     <main class="admin-main">
+
+      <!-- Horizontal Quick Nav Bar -->
+      <div class="admin-quick-tabs">
+        <div class="quick-tab-pill active" onclick="switchAdminTab('orders')" id="qtab-orders">
+          <i class="fa-solid fa-phone-volume" style="color:#10B981;"></i> Call Orders
+        </div>
+        <div class="quick-tab-pill" onclick="switchAdminTab('products')" id="qtab-products">
+          <i class="fa-solid fa-mobile-screen" style="color:#38BDF8;"></i> Mobiles
+        </div>
+        <div class="quick-tab-pill" onclick="switchAdminTab('overview')" id="qtab-overview">
+          <i class="fa-solid fa-chart-pie" style="color:#818CF8;"></i> Sales & Stats
+        </div>
+        <div class="quick-tab-pill" onclick="switchAdminTab('customers')" id="qtab-customers">
+          <i class="fa-solid fa-users" style="color:#F472B6;"></i> Customers
+        </div>
+        <div class="quick-tab-pill" onclick="switchAdminTab('coupons')" id="qtab-coupons">
+          <i class="fa-solid fa-tag" style="color:#FBBF24;"></i> Coupons
+        </div>
+        <div class="quick-tab-pill" onclick="switchAdminTab('settings')" id="qtab-settings">
+          <i class="fa-solid fa-gear" style="color:#38BDF8;"></i> Store Settings
+        </div>
+      </div>
+
       <div class="admin-header">
         <div>
-          <h1 style="font-size: 1.75rem; font-weight: 800; color: #FFFFFF;" id="admin-page-title">📞 Call & Confirm Orders</h1>
+          <h1 style="font-size: 1.85rem; font-weight: 900; color: #FFFFFF;" id="admin-page-title">📞 Call & Confirm Orders</h1>
           <p style="font-size: 0.875rem; color: #94A3B8;">Call customers in 1 click, verify delivery details on WhatsApp, and confirm shipments easily.</p>
         </div>
-        <div style="display: flex; gap: 0.75rem;">
-          <button onclick="loadAdminOrders()" class="btn btn-outline btn-sm" style="color:#38BDF8; border-color:rgba(255,255,255,0.2);">
-            <i class="fa-solid fa-arrows-rotate"></i> Refresh Orders
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <button onclick="loadAdminOrders()" class="btn btn-outline btn-sm" style="color:#38BDF8; border-color:rgba(56,189,248,0.3);">
+            <i class="fa-solid fa-arrows-rotate"></i> Refresh
           </button>
           <button onclick="openProductModal()" class="btn btn-primary btn-sm">
             <i class="fa-solid fa-plus"></i> Add New Phone
@@ -384,54 +788,54 @@
       </div>
 
       <!-- Instant Editable WhatsApp Number Bar -->
-      <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1.5px solid #10B981; border-radius: var(--radius-lg); padding: 1rem 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-        <div style="display:flex; align-items:center; gap:0.85rem;">
-          <div style="width:42px; height:42px; background:#25D366; color:#FFFFFF; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">
+      <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1.5px solid #10B981; border-top: 2px solid #34D399; border-radius: var(--radius-lg); padding: 1.15rem 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15);">
+        <div style="display:flex; align-items:center; gap:0.95rem;">
+          <div style="width:44px; height:44px; background:linear-gradient(180deg, #10B981 0%, #059669 100%); color:#FFFFFF; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
             <i class="fa-brands fa-whatsapp"></i>
           </div>
           <div>
-            <div style="font-weight:800; font-size:1rem; color:#FFFFFF;">Store WhatsApp Number: <span id="current-wa-badge" style="color:#34D399; font-family:monospace;">+91 98765 43210</span></div>
+            <div style="font-weight:900; font-size:1.05rem; color:#FFFFFF;">Store WhatsApp Number: <span id="current-wa-badge" style="color:#34D399; font-family:monospace; background: rgba(0,0,0,0.4); padding: 2px 8px; border-radius: 6px;">+91 82489 48451</span></div>
             <div style="font-size:0.75rem; color:#94A3B8;">All customer inquiries, product requests, and order confirmation buttons link to this number.</div>
           </div>
         </div>
 
         <div style="display:flex; gap:0.5rem; align-items:center;">
-          <input type="text" id="quick-wa-input" class="form-input dark-input" placeholder="+919876543210" style="width:190px; font-weight:700; color:#34D399; padding:0.45rem 0.75rem;">
-          <button type="button" onclick="saveAdminWhatsApp()" class="btn btn-primary btn-sm" style="background:#25D366; color:#064E3B; font-weight:800; border:none;">
+          <input type="text" id="quick-wa-input" class="form-input dark-input" placeholder="+91 82489 48451" style="width:190px; font-weight:800; color:#34D399; padding:0.5rem 0.75rem;">
+          <button type="button" onclick="saveAdminWhatsApp()" class="btn btn-whatsapp btn-sm" style="font-weight:800;">
             <i class="fa-solid fa-floppy-disk"></i> Save WhatsApp
           </button>
         </div>
       </div>
 
-      <!-- Tab: Orders (Default primary view for easy admin phone handling) -->
+      <!-- Tab: Orders (Default primary view) -->
       <section id="tab-orders">
-        <!-- Quick Alert Cards -->
+        <!-- Quick Alert 3D Cards -->
         <div class="metric-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 1.5rem;">
           <div class="metric-card" style="border-color: #F59E0B; cursor:pointer;" onclick="filterOrdersBy('awaiting')">
-            <div class="metric-icon-box" style="background:rgba(245, 158, 11, 0.2); color:#F59E0B;"><i class="fa-solid fa-phone"></i></div>
+            <div class="metric-icon-box" style="background:rgba(245, 158, 11, 0.25); color:#F59E0B; border-color:#F59E0B;"><i class="fa-solid fa-phone"></i></div>
             <div>
               <div class="metric-val" id="stat-pending-calls" style="color:#F59E0B;">0</div>
               <div class="metric-title">Needs Phone Call</div>
             </div>
           </div>
           <div class="metric-card" style="cursor:pointer;" onclick="filterOrdersBy('confirmed')">
-            <div class="metric-icon-box" style="background:rgba(59, 130, 246, 0.2); color:#60A5FA;"><i class="fa-solid fa-clipboard-check"></i></div>
+            <div class="metric-icon-box" style="background:rgba(59, 130, 246, 0.25); color:#60A5FA; border-color:#60A5FA;"><i class="fa-solid fa-clipboard-check"></i></div>
             <div>
               <div class="metric-val" id="stat-confirmed-orders">0</div>
               <div class="metric-title">Confirmed & Ready</div>
             </div>
           </div>
           <div class="metric-card" style="cursor:pointer;" onclick="filterOrdersBy('dispatched')">
-            <div class="metric-icon-box" style="background:rgba(124, 58, 237, 0.2); color:#A78BFA;"><i class="fa-solid fa-truck-fast"></i></div>
+            <div class="metric-icon-box" style="background:rgba(124, 58, 237, 0.25); color:#A78BFA; border-color:#A78BFA;"><i class="fa-solid fa-truck-fast"></i></div>
             <div>
               <div class="metric-val" id="stat-dispatched-orders">0</div>
               <div class="metric-title">In-Transit / Shipped</div>
             </div>
           </div>
           <div class="metric-card">
-            <div class="metric-icon-box" style="background:rgba(16, 185, 129, 0.2); color:#34D399;"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <div class="metric-icon-box" style="background:rgba(16, 185, 129, 0.25); color:#34D399; border-color:#10B981;"><i class="fa-solid fa-indian-rupee-sign"></i></div>
             <div>
-              <div class="metric-val" id="stat-total-sales-orders">₹0</div>
+              <div class="metric-val" id="stat-total-sales-orders" style="color:#34D399;">₹0</div>
               <div class="metric-title">Collected Revenue</div>
             </div>
           </div>
@@ -456,7 +860,7 @@
                 <th>Ordered Phone</th>
                 <th>Amount</th>
                 <th>Current Status</th>
-                <th style="min-width: 220px;">1-Click Easy Actions</th>
+                <th style="min-width: 230px;">1-Click Easy Actions</th>
               </tr>
             </thead>
             <tbody id="admin-orders-tbody">
@@ -500,7 +904,7 @@
         </div>
 
         <div class="admin-card">
-          <h2 style="font-size: 1.15rem; font-weight: 800; color: #F59E0B;"><i class="fa-solid fa-triangle-exclamation"></i> Low Inventory Alerts (&le; 2 Units)</h2>
+          <h2 style="font-size: 1.2rem; font-weight: 800; color: #F59E0B; margin-bottom: 0.5rem;"><i class="fa-solid fa-triangle-exclamation"></i> Low Inventory Alerts (&le; 2 Units)</h2>
           <table class="admin-table">
             <thead>
               <tr>
@@ -519,8 +923,11 @@
       <!-- Tab: Products -->
       <section id="tab-products" style="display: none;">
         <div class="admin-card">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-            <h2 style="font-size: 1.25rem; font-weight: 800;">Refurbished Inventory Management</h2>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <h2 style="font-size: 1.35rem; font-weight: 900; color: #FFFFFF;">Refurbished Inventory Management</h2>
+              <p style="font-size: 0.8125rem; color: #94A3B8;">Add, update prices, manage stock, and edit 32-point inspection diagnostic grades.</p>
+            </div>
             <button onclick="openProductModal()" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Add New Phone</button>
           </div>
           <table class="admin-table">
@@ -544,7 +951,8 @@
       <!-- Tab: Customers -->
       <section id="tab-customers" style="display: none;">
         <div class="admin-card">
-          <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom:1rem;">Customer Database</h2>
+          <h2 style="font-size: 1.35rem; font-weight: 900; color: #FFFFFF; margin-bottom:0.5rem;">Customer Database</h2>
+          <p style="font-size: 0.8125rem; color: #94A3B8; margin-bottom:1.25rem;">Directory of all registered buyers and callers.</p>
           <table class="admin-table">
             <thead>
               <tr>
@@ -564,8 +972,11 @@
       <!-- Tab: Coupons -->
       <section id="tab-coupons" style="display: none;">
         <div class="admin-card">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-            <h2 style="font-size: 1.25rem; font-weight: 800;">Active Coupons & Discounts</h2>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <h2 style="font-size: 1.35rem; font-weight: 900; color: #FFFFFF;">Active Coupons & Discounts</h2>
+              <p style="font-size: 0.8125rem; color: #94A3B8;">Create flat or percentage discount promo codes for customers.</p>
+            </div>
             <button onclick="openCouponModal()" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Create Coupon</button>
           </div>
           <table class="admin-table">
@@ -586,32 +997,33 @@
       <!-- Tab: Settings -->
       <section id="tab-settings" style="display: none;">
         <div class="admin-card">
-          <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom:1rem;">Store & Customer Call Settings</h2>
+          <h2 style="font-size: 1.35rem; font-weight: 900; color: #FFFFFF; margin-bottom:0.5rem;">Store & Customer Call Settings</h2>
+          <p style="font-size: 0.8125rem; color: #94A3B8; margin-bottom:1.5rem;">Configure the store telephone number, WhatsApp support line, and UPI payment details.</p>
           <form id="admin-settings-form">
             <div class="form-grid-2">
               <div>
-                <label class="form-label" style="color:#E2E8F0;">Shop Display Name</label>
+                <label class="form-label">Shop Display Name</label>
                 <input type="text" id="set-shop-name" class="form-input dark-input">
               </div>
               <div>
-                <label class="form-label" style="color:#E2E8F0;">Customer Confirmation WhatsApp Number</label>
-                <input type="text" id="set-whatsapp" class="form-input dark-input" placeholder="+919876543210">
+                <label class="form-label">Customer Confirmation WhatsApp Number</label>
+                <input type="text" id="set-whatsapp" class="form-input dark-input" placeholder="+918248948451">
               </div>
             </div>
 
             <div class="form-grid-2">
               <div>
-                <label class="form-label" style="color:#E2E8F0;">Store Calling Phone Number</label>
-                <input type="text" id="set-phone" class="form-input dark-input">
+                <label class="form-label">Store Calling Phone Number</label>
+                <input type="text" id="set-phone" class="form-input dark-input" placeholder="+91 82489 48451">
               </div>
               <div>
-                <label class="form-label" style="color:#E2E8F0;">Store UPI ID</label>
+                <label class="form-label">Store UPI ID</label>
                 <input type="text" id="set-upi" class="form-input dark-input">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label" style="color:#E2E8F0;">Store Address (Printed on Invoices)</label>
+              <label class="form-label">Store Address (Printed on Invoices)</label>
               <textarea id="set-address" rows="2" class="form-input dark-input"></textarea>
             </div>
 
@@ -622,10 +1034,10 @@
         </div>
 
         <!-- Admin Security / Change Password Card -->
-        <div class="admin-card" style="margin-top: 2rem; border: 1.5px solid rgba(37, 99, 235, 0.4);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem; flex-wrap:wrap; gap:1rem;">
+        <div class="admin-card" id="admin-password-section" style="margin-top: 2rem; border-color: rgba(56, 189, 248, 0.4);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
             <div>
-              <h2 style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF;">
+              <h2 style="font-size: 1.35rem; font-weight: 900; color: #FFFFFF;">
                 <i class="fa-solid fa-shield-halved" style="color: #10B981;"></i> Admin Security & Change Password
               </h2>
               <p style="font-size: 0.8125rem; color: #94A3B8;">Protect your store by setting a strong, secure password for the admin portal.</p>
@@ -638,13 +1050,12 @@
           <form id="admin-password-form">
             <div class="form-grid-2">
               <div>
-                <label class="form-label" style="color:#E2E8F0;">Current Password *</label>
+                <label class="form-label">Current Password *</label>
                 <input type="password" id="pwd-current" required class="form-input dark-input" placeholder="Current password (default: admin123)">
               </div>
               <div>
-                <label class="form-label" style="color:#E2E8F0;">New Strong Password *</label>
+                <label class="form-label">New Strong Password *</label>
                 <input type="text" id="pwd-new" required minlength="8" class="form-input dark-input" placeholder="At least 8 chars with letters, numbers & symbols">
-                <!-- Strength Meter -->
                 <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
                   <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
                     <div id="pwd-strength-bar" style="height: 100%; width: 0%; background: #EF4444; transition: all 0.3s;"></div>
@@ -654,12 +1065,12 @@
               </div>
             </div>
 
-            <div class="form-group" style="margin-top: 1rem;">
-              <label class="form-label" style="color:#E2E8F0;">Confirm New Password *</label>
+            <div class="form-group">
+              <label class="form-label">Confirm New Password *</label>
               <input type="text" id="pwd-confirm" required minlength="8" class="form-input dark-input" placeholder="Re-type your new password">
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg" style="background: #10B981; border-color: #10B981;">
+            <button type="submit" class="btn btn-whatsapp btn-lg">
               <i class="fa-solid fa-lock"></i> Update & Save New Password
             </button>
           </form>
@@ -672,8 +1083,8 @@
   <div id="product-modal" class="admin-modal-backdrop" style="display: none;">
     <div class="admin-modal">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem;">
-        <h2 style="font-size:1.35rem; font-weight:800;" id="prod-modal-title">Add Refurbished Phone</h2>
-        <button type="button" onclick="closeProductModal()" style="font-size:1.5rem; color:#94A3B8;">&times;</button>
+        <h2 style="font-size:1.4rem; font-weight:900;" id="prod-modal-title">Add Refurbished Phone</h2>
+        <button type="button" onclick="closeProductModal()" style="font-size:1.75rem; color:#94A3B8;">&times;</button>
       </div>
 
       <form id="product-form">
@@ -681,11 +1092,11 @@
 
         <div class="form-grid-2">
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Product Title *</label>
+            <label class="form-label">Product Title *</label>
             <input type="text" id="p-name" required class="form-input dark-input" placeholder="e.g. Apple iPhone 14 Pro (Deep Purple, 128 GB)">
           </div>
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Brand *</label>
+            <label class="form-label">Brand *</label>
             <select id="p-brand" required class="form-input dark-input">
               <option value="Apple">Apple</option>
               <option value="Samsung">Samsung</option>
@@ -700,33 +1111,33 @@
 
         <div class="form-grid-2">
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Original MRP (₹) *</label>
+            <label class="form-label">Original MRP (₹) *</label>
             <input type="number" id="p-orig-price" required class="form-input dark-input" placeholder="129900">
           </div>
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Selling Refurbished Price (₹) *</label>
+            <label class="form-label">Selling Refurbished Price (₹) *</label>
             <input type="number" id="p-sell-price" required class="form-input dark-input" placeholder="68999">
           </div>
         </div>
 
         <div class="form-grid-2">
           <div>
-            <label class="form-label" style="color:#E2E8F0;">RAM *</label>
+            <label class="form-label">RAM *</label>
             <input type="text" id="p-ram" required class="form-input dark-input" placeholder="e.g. 6 GB">
           </div>
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Storage Capacity *</label>
+            <label class="form-label">Storage Capacity *</label>
             <input type="text" id="p-storage" required class="form-input dark-input" placeholder="e.g. 128 GB">
           </div>
         </div>
 
         <div class="form-grid-2">
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Battery Health % (80-100) *</label>
+            <label class="form-label">Battery Health % (80-100) *</label>
             <input type="number" id="p-battery" required min="80" max="100" class="form-input dark-input" placeholder="96">
           </div>
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Grade *</label>
+            <label class="form-label">Grade *</label>
             <select id="p-grade" class="form-input dark-input">
               <option value="Superb (Like New)">Superb (Like New)</option>
               <option value="Good Condition">Good Condition</option>
@@ -737,42 +1148,42 @@
 
         <div class="form-grid-2">
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Available Stock *</label>
+            <label class="form-label">Available Stock *</label>
             <input type="number" id="p-stock" required min="0" class="form-input dark-input" placeholder="3">
           </div>
           <div>
-            <label class="form-label" style="color:#E2E8F0;">Color Finish</label>
+            <label class="form-label">Color Finish</label>
             <input type="text" id="p-color" class="form-input dark-input" placeholder="Deep Purple">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Display Condition</label>
+          <label class="form-label">Display Condition</label>
           <input type="text" id="p-display" class="form-input dark-input" placeholder="Flawless OLED">
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Camera Condition</label>
+          <label class="form-label">Camera Condition</label>
           <input type="text" id="p-camera" class="form-input dark-input" placeholder="100% Tested">
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Body Condition</label>
+          <label class="form-label">Body Condition</label>
           <input type="text" id="p-body" class="form-input dark-input" placeholder="Mint surgical-grade frame">
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Image URL *</label>
+          <label class="form-label">Image URL *</label>
           <input type="url" id="p-image-url" required class="form-input dark-input" placeholder="https://images.unsplash.com/...">
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Description</label>
+          <label class="form-label">Description</label>
           <textarea id="p-desc" rows="2" class="form-input dark-input"></textarea>
         </div>
 
         <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
-          <button type="button" onclick="closeProductModal()" class="btn btn-outline" style="color:#E2E8F0; border-color:rgba(255,255,255,0.2);">Cancel</button>
+          <button type="button" onclick="closeProductModal()" class="btn btn-outline" style="color:#E2E8F0;">Cancel</button>
           <button type="submit" class="btn btn-primary">Save Phone</button>
         </div>
       </form>
@@ -783,34 +1194,52 @@
   <div id="coupon-modal" class="admin-modal-backdrop" style="display: none;">
     <div class="admin-modal" style="max-width: 440px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-        <h2 style="font-size:1.25rem; font-weight:800;">Create Discount Coupon</h2>
-        <button type="button" onclick="closeCouponModal()" style="font-size:1.5rem; color:#94A3B8;">&times;</button>
+        <h2 style="font-size:1.35rem; font-weight:900;">Create Discount Coupon</h2>
+        <button type="button" onclick="closeCouponModal()" style="font-size:1.75rem; color:#94A3B8;">&times;</button>
       </div>
 
       <form id="coupon-form">
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Coupon Code *</label>
+          <label class="form-label">Coupon Code *</label>
           <input type="text" id="cp-code" required class="form-input dark-input" placeholder="e.g. MEGA1000" style="text-transform: uppercase;">
         </div>
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Discount Type</label>
+          <label class="form-label">Discount Type</label>
           <select id="cp-type" class="form-input dark-input">
             <option value="flat">Flat Cash Discount (₹)</option>
             <option value="percentage">Percentage (%) Discount</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Discount Value *</label>
+          <label class="form-label">Discount Value *</label>
           <input type="number" id="cp-val" required class="form-input dark-input" placeholder="1000 or 10">
         </div>
         <div class="form-group">
-          <label class="form-label" style="color:#E2E8F0;">Minimum Order Amount (₹)</label>
+          <label class="form-label">Minimum Order Amount (₹)</label>
           <input type="number" id="cp-min" class="form-input dark-input" placeholder="10000">
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%;">Save Coupon</button>
       </form>
     </div>
   </div>
+
+  <script>
+    function toggleAdminSidebar(open) {
+      const sb = document.getElementById('admin-sidebar');
+      const bd = document.getElementById('admin-sidebar-backdrop');
+      if (sb) sb.classList.toggle('open', open);
+      if (bd) bd.classList.toggle('active', open);
+    }
+    function closeMobileSidebar() {
+      toggleAdminSidebar(false);
+    }
+    function scrollToPassword() {
+      setTimeout(() => {
+        const sec = document.getElementById('admin-password-section');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  </script>
 
   <script src="/js/api.js"></script>
   <script src="/js/admin.js"></script>

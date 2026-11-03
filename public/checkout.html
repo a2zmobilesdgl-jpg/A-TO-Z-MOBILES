@@ -22,22 +22,25 @@
     }
 
     .checkout-section {
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
+      background: linear-gradient(160deg, rgba(22, 33, 56, 0.85) 0%, rgba(13, 20, 36, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.65);
       border-radius: var(--radius-xl);
       padding: 2rem;
       margin-bottom: 2rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-3d-card);
+      backdrop-filter: blur(16px);
     }
     .checkout-title {
       font-size: 1.25rem;
       font-weight: 800;
-      color: var(--text-main);
+      color: #FFFFFF;
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 0.75rem;
     }
 
@@ -55,33 +58,35 @@
       font-size: 0.8125rem;
       font-weight: 700;
       margin-bottom: 0.4rem;
-      color: var(--text-main);
+      color: #CBD5E1;
     }
     .form-input {
       width: 100%;
       padding: 0.75rem 1rem;
-      border: 1.5px solid var(--border-color);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--radius-md);
       font-size: 0.9375rem;
-      color: var(--text-main);
+      color: #FFFFFF;
       outline: none;
-      transition: border-color var(--transition-fast);
-      background: #FFFFFF;
+      transition: all var(--transition-fast);
+      background: rgba(10, 15, 26, 0.9);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
     }
     .form-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      border-color: #38BDF8;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8), 0 0 14px rgba(56, 189, 248, 0.3);
     }
 
     .payment-option-card {
-      border: 2px solid var(--primary);
+      border: 2px solid #38BDF8;
       border-radius: var(--radius-lg);
       padding: 1.5rem;
       margin-bottom: 1rem;
-      background: #EFF6FF;
+      background: rgba(37, 99, 235, 0.15);
       display: flex;
       align-items: flex-start;
       gap: 1rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
     }
     .payment-radio {
       margin-top: 4px;
