@@ -459,12 +459,17 @@
           container.innerHTML = res.products.map(p => {
             const img = p.images[0] || 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500';
             const inWishlist = AtoZ.isInWishlist(p.id);
+            const storePhone = '+918248948451';
             return `
               <div class="product-card">
                 <div class="card-badges">
                   <span class="badge-grade"><i class="fa-solid fa-shield-halved"></i> ${p.grade.split(' ')[0]}</span>
                   ${p.discount_percent > 0 ? `<span class="badge-discount">${p.discount_percent}% OFF</span>` : ''}
                 </div>
+
+                <button class="btn-quick-cart" onclick="addSingleToCart(event, ${p.id})" title="Add to Cart">
+                  <i class="fa-solid fa-bag-shopping"></i>
+                </button>
 
                 <button class="btn-wishlist ${inWishlist ? 'active' : ''}" onclick="toggleWishlistItem(event, ${p.id})" title="Wishlist">
                   <i class="fa-${inWishlist ? 'solid' : 'regular'} fa-heart"></i>
@@ -479,28 +484,21 @@
                   <a href="/product.html?id=${p.id}" class="card-title" title="${p.name}">${p.name}</a>
 
                   <div class="card-condition-row">
-                    <span class="pill-battery"><i class="fa-solid fa-battery-three-quarters"></i> ${p.battery_health}% Battery</span>
+                    <span class="pill-battery"><i class="fa-solid fa-battery-three-quarters"></i> ${p.battery_health}%</span>
                     <span class="pill-spec">${p.ram} / ${p.storage}</span>
-                  </div>
-
-                  <div class="card-rating">
-                    <span class="rating-stars"><i class="fa-solid fa-star"></i></span>
-                    <span style="font-weight: 700;">${p.rating}</span>
-                    <span class="rating-count">(${p.reviews_count})</span>
                   </div>
 
                   <div class="card-price-box">
                     <span class="price-current">${AtoZ.formatCurrency(p.selling_price)}</span>
                     <span class="price-original">${AtoZ.formatCurrency(p.original_price)}</span>
-                    <span class="price-save">Save ${AtoZ.formatCurrency(p.original_price - p.selling_price)}</span>
                   </div>
 
                   <div class="card-actions">
-                    <button class="btn-cart" onclick="addSingleToCart(event, ${p.id})">
-                      <i class="fa-solid fa-bag-shopping"></i> Add to Cart
-                    </button>
-                    <a href="/checkout.html?buyNowId=${p.id}" class="btn-buy">
-                      Buy Now
+                    <a href="tel:${storePhone}" class="btn-card-call" onclick="event.stopPropagation();" title="Call to Order">
+                      <i class="fa-solid fa-phone-volume"></i> Call
+                    </a>
+                    <a href="/checkout.html?buyNowId=${p.id}" class="btn-buy" title="Buy Cash on Delivery">
+                      <i class="fa-solid fa-bolt"></i> Buy COD
                     </a>
                   </div>
                 </div>
@@ -509,10 +507,14 @@
           }).join('');
         } else {
           container.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 4rem 1rem; background: #FFFFFF; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-              <i class="fa-solid fa-mobile-screen-button" style="font-size: 3rem; color: #CBD5E1; margin-bottom: 1rem;"></i>
-              <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">No refurbished phones match your filters</h3>
-              <p style="color: var(--text-muted); font-size: 0.9375rem; margin-bottom: 1.5rem;">Try clearing selected brands, expanding price budgets, or searching for another model.</p>
+            <div style="grid-column: 1/-1; text-align: center; padding: 4rem 1rem; background: linear-gradient(160deg, rgba(22, 33, 56, 0.85) 0%, rgba(13, 20, 36, 0.95) 100%); border-radius: var(--radius-xl); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: var(--shadow-3d-card);">
+              <i class="fa-solid fa-mobile-screen-button" style="font-size: 3rem; color: #38BDF8; margin-bottom: 1rem;"></i>
+              <h3 style="font-size: 1.25rem; font-weight: 800; color:#FFFFFF; margin-bottom: 0.5rem;">No refurbished phones match your filters</h3>
+              <p style="color: #94A3B8; font-size: 0.9375rem; margin-bottom: 1.5rem;">Try clearing selected brands, expanding price budgets, or searching for another model.</p>
+              <button onclick="resetFilters()" class="btn btn-primary"><i class="fa-solid fa-arrows-rotate"></i> Reset All Filters</button>
+            </div>
+          `;
+        }
               <button onclick="resetFilters()" class="btn btn-primary"><i class="fa-solid fa-arrows-rotate"></i> Reset All Filters</button>
             </div>
           `;

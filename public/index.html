@@ -609,12 +609,17 @@
       container.innerHTML = products.map(p => {
         const img = p.images[0] || 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500';
         const inWishlist = AtoZ.isInWishlist(p.id);
+        const storePhone = '+918248948451';
         return `
           <div class="product-card">
             <div class="card-badges">
               <span class="badge-grade"><i class="fa-solid fa-shield-halved"></i> ${p.grade.split(' ')[0]}</span>
               ${p.discount_percent > 0 ? `<span class="badge-discount">${p.discount_percent}% OFF</span>` : ''}
             </div>
+
+            <button class="btn-quick-cart" onclick="addSingleToCart(event, ${p.id})" title="Add to Cart">
+              <i class="fa-solid fa-bag-shopping"></i>
+            </button>
 
             <button class="btn-wishlist ${inWishlist ? 'active' : ''}" onclick="toggleWishlistItem(event, ${p.id})" title="Add to Wishlist">
               <i class="fa-${inWishlist ? 'solid' : 'regular'} fa-heart"></i>
@@ -633,26 +638,17 @@
                 <span class="pill-spec">${p.ram} / ${p.storage}</span>
               </div>
 
-              <div class="card-rating">
-                <span class="rating-stars">
-                  <i class="fa-solid fa-star"></i>
-                </span>
-                <span style="font-weight: 700;">${p.rating}</span>
-                <span class="rating-count">(${p.reviews_count} reviews)</span>
-              </div>
-
               <div class="card-price-box">
                 <span class="price-current">${AtoZ.formatCurrency(p.selling_price)}</span>
                 <span class="price-original">${AtoZ.formatCurrency(p.original_price)}</span>
-                <span class="price-save">Save ${AtoZ.formatCurrency(p.original_price - p.selling_price)}</span>
               </div>
 
               <div class="card-actions">
-                <button class="btn-cart" onclick="addSingleToCart(event, ${p.id})">
-                  <i class="fa-solid fa-bag-shopping"></i> Add to Cart
-                </button>
-                <a href="/checkout.html?buyNowId=${p.id}" class="btn-buy">
-                  Buy Now
+                <a href="tel:${storePhone}" class="btn-card-call" onclick="event.stopPropagation();" title="Call to Order">
+                  <i class="fa-solid fa-phone-volume"></i> Call
+                </a>
+                <a href="/checkout.html?buyNowId=${p.id}" class="btn-buy" title="Buy Cash on Delivery">
+                  <i class="fa-solid fa-bolt"></i> Buy COD
                 </a>
               </div>
             </div>

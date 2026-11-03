@@ -23,8 +23,10 @@
     .policy-nav {
       position: sticky;
       top: 100px;
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
+      background: linear-gradient(160deg, rgba(22, 33, 56, 0.85) 0%, rgba(13, 20, 36, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.65);
       border-radius: var(--radius-lg);
       padding: 1.25rem;
       height: fit-content;
@@ -32,27 +34,32 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      box-shadow: var(--shadow-3d-card);
+      backdrop-filter: blur(16px);
     }
     .policy-nav a {
       display: block;
       padding: 0.6rem 0.85rem;
       font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-muted);
+      font-weight: 700;
+      color: #94A3B8;
       border-radius: var(--radius-sm);
       transition: all var(--transition-fast);
     }
     .policy-nav a:hover, .policy-nav a.active {
-      background: var(--primary-light);
-      color: var(--primary);
+      background: rgba(37, 99, 235, 0.2);
+      color: #38BDF8;
     }
     .policy-card {
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
+      background: linear-gradient(160deg, rgba(22, 33, 56, 0.85) 0%, rgba(13, 20, 36, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.65);
       border-radius: var(--radius-xl);
       padding: 2.5rem;
       margin-bottom: 2.5rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-3d-card);
+      backdrop-filter: blur(16px);
     }
     .policy-card h2 {
       font-size: 1.5rem;
