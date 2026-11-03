@@ -1096,16 +1096,97 @@
             <input type="text" id="p-name" required class="form-input dark-input" placeholder="e.g. Apple iPhone 14 Pro (Deep Purple, 128 GB)">
           </div>
           <div>
-            <label class="form-label">Brand *</label>
-            <select id="p-brand" required class="form-input dark-input">
-              <option value="Apple">Apple</option>
-              <option value="Samsung">Samsung</option>
-              <option value="OnePlus">OnePlus</option>
-              <option value="Redmi">Redmi</option>
-              <option value="Vivo">Vivo</option>
-              <option value="Oppo">Oppo</option>
-              <option value="Realme">Realme</option>
-            </select>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+              <label class="form-label" style="margin-bottom:0;">Brand (Select or Type Any Custom Brand) *</label>
+              <span style="font-size:0.7rem; color:#38BDF8; font-weight:700;"><i class="fa-solid fa-pen-to-square"></i> Fully Editable</span>
+            </div>
+
+            <!-- Quick Select Preset Dropdown for All Mobile Companies -->
+            <div style="margin-bottom:0.5rem;">
+              <select id="brand-preset-selector" class="form-input dark-input" onchange="onPresetBrandSelect(this.value)">
+                <option value="">-- Choose Brand Preset (or Type Below) --</option>
+                <optgroup label="Popular Flagship Brands">
+                  <option value="Apple">Apple (iPhone)</option>
+                  <option value="Samsung">Samsung (Galaxy)</option>
+                  <option value="OnePlus">OnePlus</option>
+                  <option value="Google Pixel">Google Pixel</option>
+                  <option value="Nothing">Nothing Phone</option>
+                </optgroup>
+                <optgroup label="Mainstream Brands">
+                  <option value="Xiaomi">Xiaomi / Mi</option>
+                  <option value="Redmi">Redmi</option>
+                  <option value="Vivo">Vivo</option>
+                  <option value="Oppo">Oppo</option>
+                  <option value="Realme">Realme</option>
+                  <option value="Motorola">Motorola (Moto)</option>
+                  <option value="Poco">Poco</option>
+                  <option value="iQOO">iQOO</option>
+                </optgroup>
+                <optgroup label="Budget & Value Brands">
+                  <option value="Infinix">Infinix</option>
+                  <option value="Tecno">Tecno</option>
+                  <option value="Lava">Lava</option>
+                  <option value="Nokia">Nokia</option>
+                  <option value="Micromax">Micromax</option>
+                </optgroup>
+                <optgroup label="Gaming & Other Brands">
+                  <option value="Asus">Asus (ROG / Zenfone)</option>
+                  <option value="Honor">Honor</option>
+                  <option value="Sony">Sony Xperia</option>
+                  <option value="Black Shark">Black Shark</option>
+                </optgroup>
+                <option value="__custom__">✍️ Custom Brand (Type Your Own Name)</option>
+              </select>
+            </div>
+
+            <!-- Editable Text Input (Directly binds to p-brand for saving) -->
+            <div style="position: relative;">
+              <input type="text" id="p-brand" name="brand" required class="form-input dark-input" placeholder="Type or Edit Brand (e.g. Apple, Nothing, Pixel, Lava...)" list="all-brands-datalist" style="font-weight:800; color:#38BDF8; padding-left: 2.2rem;">
+              <i class="fa-solid fa-tag" style="position:absolute; left:0.8rem; top:50%; transform:translateY(-50%); color:#38BDF8; font-size:0.85rem;"></i>
+            </div>
+
+            <!-- Autocomplete Suggestions List -->
+            <datalist id="all-brands-datalist">
+              <option value="Apple">
+              <option value="Samsung">
+              <option value="OnePlus">
+              <option value="Google Pixel">
+              <option value="Nothing">
+              <option value="Xiaomi">
+              <option value="Redmi">
+              <option value="Vivo">
+              <option value="Oppo">
+              <option value="Realme">
+              <option value="Motorola">
+              <option value="Poco">
+              <option value="iQOO">
+              <option value="Infinix">
+              <option value="Tecno">
+              <option value="Asus">
+              <option value="Honor">
+              <option value="Nokia">
+              <option value="Sony">
+              <option value="Lava">
+              <option value="Micromax">
+              <option value="Lenovo">
+              <option value="Black Shark">
+            </datalist>
+
+            <!-- 1-Click Fast Brand Chips -->
+            <div style="display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.5rem;">
+              <span class="brand-chip" onclick="setBrandValue('Apple')">🍏 Apple</span>
+              <span class="brand-chip" onclick="setBrandValue('Samsung')">📱 Samsung</span>
+              <span class="brand-chip" onclick="setBrandValue('OnePlus')">⚡ OnePlus</span>
+              <span class="brand-chip" onclick="setBrandValue('Google Pixel')">🔍 Pixel</span>
+              <span class="brand-chip" onclick="setBrandValue('Nothing')">⚪ Nothing</span>
+              <span class="brand-chip" onclick="setBrandValue('Redmi')">🔴 Redmi</span>
+              <span class="brand-chip" onclick="setBrandValue('Vivo')">Vivo</span>
+              <span class="brand-chip" onclick="setBrandValue('Oppo')">Oppo</span>
+              <span class="brand-chip" onclick="setBrandValue('Realme')">Realme</span>
+              <span class="brand-chip" onclick="setBrandValue('Motorola')">Ⓜ️ Moto</span>
+              <span class="brand-chip" onclick="setBrandValue('iQOO')">⚡ iQOO</span>
+              <span class="brand-chip" onclick="setBrandValue('Poco')">Poco</span>
+            </div>
           </div>
         </div>
 
@@ -1238,6 +1319,29 @@
         const sec = document.getElementById('admin-password-section');
         if (sec) sec.scrollIntoView({ behavior: 'smooth' });
       }, 100);
+    }
+
+    function setBrandValue(val) {
+      const input = document.getElementById('p-brand');
+      if (input) {
+        input.value = val;
+        input.focus();
+      }
+      const sel = document.getElementById('brand-preset-selector');
+      if (sel) {
+        sel.value = Array.from(sel.options).some(o => o.value === val) ? val : '__custom__';
+      }
+    }
+
+    function onPresetBrandSelect(val) {
+      const input = document.getElementById('p-brand');
+      if (!input) return;
+      if (val && val !== '__custom__') {
+        input.value = val;
+      } else if (val === '__custom__') {
+        input.value = '';
+        input.focus();
+      }
     }
   </script>
 

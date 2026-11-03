@@ -1635,6 +1635,31 @@ button {
   transform: scale(1.1);
 }
 
+/* Brand Quick Pick Chips */
+.brand-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #CBD5E1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.brand-chip:hover {
+  background: rgba(37, 99, 235, 0.25);
+  border-color: #38BDF8;
+  color: #38BDF8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3);
+}
+
 /* ==========================================================================
    Responsive Breakpoints - Mobile-First App Experience
    ========================================================================== */
